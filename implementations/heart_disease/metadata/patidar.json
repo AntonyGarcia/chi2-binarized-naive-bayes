@@ -1,0 +1,171 @@
+{
+  "paper": {
+    "title": "Comparative Analysis of Machine Learning Algorithms for Heart Disease Predictions",
+    "citation": ":contentReference[oaicite:0]{index=0}"
+  },
+  "high_level_summary": {
+    "objective": "Compare three machine learning algorithms (Logistic Regression, KNN, Random Forest) for heart disease prediction using evaluation metrics.",
+    "best_models": [
+      "Random Forest",
+      "Logistic Regression"
+    ],
+    "best_accuracy_percent": 88.0,
+    "best_auc": 0.99
+  },
+  "dataset": {
+    "name": "UCI Heart Disease Dataset (merged)",
+    "sources": [
+      "Cleveland (303)",
+      "Hungarian (294)",
+      "Switzerland (123)",
+      "Long Beach VA (200)",
+      "Stalog (270)"
+    ],
+    "total_samples_raw": 1190,
+    "duplicates_removed": 272,
+    "final_samples": 918,
+    "features_count": 11,
+    "target": "Heart Disease (binary classification)",
+    "class_distribution": "Imbalanced (more positive cases than negative)"
+  },
+  "features": [
+    "Age",
+    "Gender",
+    "ChestPain",
+    "RestingBP",
+    "Cholesterol",
+    "FastingBS",
+    "RestingECG",
+    "MaxHR",
+    "ExerciseAngina",
+    "Oldpeak",
+    "ST_Slope"
+  ],
+  "preprocessing": {
+    "steps": [
+      "Data collection from UCI repository",
+      "Duplicate removal",
+      "Basic preprocessing (cleaning + transformation)",
+      "Feature extraction",
+      "Data visualization (scatter plots, class distribution)"
+    ],
+    "missing_details": [
+      "No explicit normalization/scaling described",
+      "No missing value handling details",
+      "No encoding method specified",
+      "No outlier handling description"
+    ]
+  },
+  "algorithms": {
+    "models_used": [
+      "Logistic Regression",
+      "K-Nearest Neighbors (KNN)",
+      "Random Forest"
+    ],
+    "knn_details": {
+      "k_value": 13
+    },
+    "other_models": {
+      "logistic_regression": "Binary classifier (details not specified)",
+      "random_forest": "Ensemble of decision trees (details not specified)"
+    }
+  },
+  "training_protocol": {
+    "data_split": "NOT SPECIFIED",
+    "cross_validation": "NOT REPORTED",
+    "random_seed": "NOT REPORTED",
+    "implementation_details": "NOT REPORTED"
+  },
+  "metrics": {
+    "classification": [
+      "Accuracy",
+      "Precision",
+      "Recall",
+      "F1 Score",
+      "AUC-ROC"
+    ]
+  },
+  "results": [
+    {
+      "model": "Random Forest",
+      "accuracy": 0.88,
+      "precision": 0.87,
+      "recall": 0.88,
+      "f1_score": 0.88,
+      "auc": 0.99
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.88,
+      "precision": 0.87,
+      "recall": 0.88,
+      "f1_score": 0.88,
+      "auc": 0.91
+    },
+    {
+      "model": "KNN",
+      "accuracy": 0.73,
+      "precision": 0.73,
+      "recall": 0.73,
+      "f1_score": 0.73,
+      "auc": 0.84
+    }
+  ],
+  "key_findings": [
+    "Random Forest and Logistic Regression significantly outperform KNN",
+    "Random Forest achieves the highest AUC (0.99), indicating strong classification capability",
+    "KNN performs poorly compared to other models",
+    "Dataset imbalance likely affects performance",
+    "Model performance varies significantly depending on algorithm choice"
+  ],
+  "methodology_pipeline": {
+    "steps": [
+      "Collect dataset",
+      "Extract relevant features",
+      "Preprocess data",
+      "Split into training/testing (implied but not specified)",
+      "Train 3 models (LR, KNN, RF)",
+      "Evaluate using 5 metrics",
+      "Compare results"
+    ]
+  },
+  "reproducibility": {
+    "status": "LOW REPRODUCIBILITY",
+    "available": [
+      "Dataset identity and composition",
+      "Feature list",
+      "Algorithms used",
+      "Evaluation metrics",
+      "Final results"
+    ],
+    "missing": [
+      "Train/test split details",
+      "Cross-validation setup",
+      "Hyperparameters (except KNN k=13)",
+      "Preprocessing specifics",
+      "Random seeds",
+      "Implementation details"
+    ]
+  },
+  "limitations": [
+    "Very limited methodological detail",
+    "No hyperparameter tuning described",
+    "No preprocessing details",
+    "No validation strategy described",
+    "Small experimental scope (only 3 models)",
+    "Class imbalance not addressed"
+  ],
+  "recommended_reproduction": {
+    "steps": [
+      "Download UCI heart dataset and merge sources",
+      "Remove duplicate entries",
+      "Handle class imbalance (e.g., SMOTE or weighting)",
+      "Encode categorical variables",
+      "Standardize numerical features",
+      "Split dataset (e.g., 70/30)",
+      "Train Logistic Regression, KNN (k=13), and Random Forest",
+      "Tune hyperparameters via grid search",
+      "Evaluate using accuracy, precision, recall, F1, and AUC"
+    ]
+  }
+}

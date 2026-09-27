@@ -1,0 +1,307 @@
+{
+  "paper": {
+    "title": "Probabilistic neural network for breast cancer classification",
+    "authors": [
+      "Ahmad Taher Azar",
+      "Shaimaa Ahmed El-Said"
+    ],
+    "publication": "Neural Computing and Applications",
+    "year": 2013,
+    "problem": "Breast cancer classification (benign vs malignant)",
+    "dataset": "Wisconsin Breast Cancer Database (original WBC)"
+  },
+  "replication_relevant_details": {
+    "data": {
+      "source": "University of Wisconsin Hospital, Madison, from Dr. William H. Wolberg",
+      "original_samples": 699,
+      "removed_missing_value_samples": 16,
+      "final_samples": 683,
+      "class_distribution": {
+        "benign": 444,
+        "malignant": 239,
+        "benign_pct": 65.01,
+        "malignant_pct": 34.99
+      },
+      "input_features_count": 9,
+      "features": [
+        "clump thickness",
+        "uniformity of cell size",
+        "uniformity of cell shape",
+        "marginal adhesion",
+        "single epithelial cell size",
+        "bare nuclei",
+        "bland chromatin",
+        "normal nucleoli",
+        "mitoses"
+      ],
+      "target_classes": [
+        "benign",
+        "malignant"
+      ]
+    },
+    "preprocessing": {
+      "missing_value_handling": "Removed 16 instances with missing values",
+      "feature_scaling": "Rescaled all data to [0, 1]",
+      "normalization_note": "Paper explicitly states data should be normalized before entering the classifier",
+      "additional_pnn_normalization": "For PNN, each sample datum is normalized to unit length before becoming a neuron weight vector"
+    },
+    "evaluation_protocol": {
+      "split_strategy": "Training + validation",
+      "cross_validation": {
+        "used": true,
+        "method": "10-fold cross-validation",
+        "note": "Original sample randomly partitioned into 10 subsamples; each used once as validation"
+      },
+      "selection_strategy": "For MLP, different architectures were tried and classification error monitored",
+      "metrics_reported": [
+        "accuracy",
+        "sensitivity",
+        "specificity",
+        "geometric mean of sensitivity and specificity",
+        "positive predictive value (PPV)",
+        "negative predictive value (NPV)",
+        "geometric mean of PPV and NPV",
+        "precision",
+        "recall",
+        "F measure",
+        "MCC",
+        "AUC"
+      ]
+    },
+    "algorithms": {
+      "mlp": {
+        "family": "Multi-layer perceptron",
+        "architecture_description": "Three-layer model recommended: input, one hidden layer, output",
+        "best_topology_reported": "9-3-2",
+        "activation_functions": {
+          "input_layer": "linear",
+          "hidden_layer": "log-sigmoid",
+          "output_layer": "log-sigmoid"
+        },
+        "training_method": "Scaled Conjugate Gradient (SCG)",
+        "loss_or_objective": "Mean squared error (MSE)",
+        "training_mode": "Batch mode",
+        "hyperparameter_search": {
+          "hidden_neurons_tested": "2 to 20, step size 1",
+          "selected_hidden_neurons": 7,
+          "note": "Paper contains a conflict: Table 1 lists 7 hidden neurons, while conclusion states best topology 9-3-2 (which implies 3 hidden neurons)."
+        }
+      },
+      "rbf": {
+        "family": "Radial Basis Function network",
+        "architecture_description": "Input layer, nonlinear hidden layer with Gaussian basis functions, linear output transformation followed by sigmoid in classification setting",
+        "hidden_activation": "Gaussian",
+        "output_characteristic": "Weighted sum of hidden-unit outputs; sigmoid-bounded output in (0,1)",
+        "optimization_method": "Repeating Weighted Boosting Search (RWBS)",
+        "hyperparameters_reported": {
+          "number_of_neurons_table_2": 50,
+          "minimum_radius_of_neurons": 0.02276,
+          "maximum_radius_of_neurons": 399.7,
+          "minimum_lambda": 0.05948,
+          "maximum_lambda": 9.02795
+        },
+        "best_hidden_neurons_conclusion": 23,
+        "hyperparameter_conflict_note": "Table 2 reports number of neurons = 50, but conclusion says best classification accuracy of RBF was obtained using 23 hidden neurons."
+      },
+      "pnn": {
+        "family": "Probabilistic Neural Network / Parzen PNN",
+        "architecture_description": "Four-layer network with input, pattern, summation, and output layers",
+        "learning_description": "One pattern neuron per training case; class-wise summation neurons estimate density; output chooses class with maximum probability",
+        "training_characteristic": "No heuristic search for weights; training mainly consists of incorporating training cases into the pattern layer",
+        "core_theory": [
+          "Bayesian classification",
+          "Parzen window density estimation"
+        ],
+        "hyperparameters_reported": {
+          "smoothing_factor": "Required and described as an optimization problem, but exact numeric value not reported"
+        },
+        "advantages_claimed": [
+          "fast",
+          "simple to learn",
+          "tolerates erroneous samples and outliers",
+          "supports incremental addition of new data"
+        ]
+      }
+    },
+    "results": {
+      "training_phase": {
+        "confusion_matrices": {
+          "mlp": {
+            "TP": 435,
+            "FN": 9,
+            "FP": 6,
+            "TN": 233
+          },
+          "rbf": {
+            "TP": 436,
+            "FN": 8,
+            "FP": 5,
+            "TN": 234
+          },
+          "pnn": {
+            "TP": 444,
+            "FN": 0,
+            "FP": 0,
+            "TN": 239
+          }
+        },
+        "metrics": {
+          "mlp": {
+            "accuracy_pct": 97.8,
+            "sensitivity_pct": 97.97,
+            "specificity_pct": 97.49,
+            "gmean_sens_spec_pct": 97.73,
+            "ppv_pct": 98.64,
+            "npv_pct": 96.28,
+            "gmean_ppv_npv_pct": 97.45,
+            "precision_pct": 98.64,
+            "recall_pct": 97.97,
+            "f1_or_f_measure": 0.9831,
+            "mcc": 0.9519,
+            "auc": 0.9956,
+            "training_time": "00:03.54"
+          },
+          "rbf": {
+            "accuracy_pct": 98.1,
+            "sensitivity_pct": 98.2,
+            "specificity_pct": 97.91,
+            "gmean_sens_spec_pct": 98.05,
+            "ppv_pct": 98.87,
+            "npv_pct": 96.69,
+            "gmean_ppv_npv_pct": 97.77,
+            "precision_pct": 98.87,
+            "recall_pct": 98.2,
+            "f1_or_f_measure": 0.9853,
+            "mcc": 0.9583,
+            "auc": 0.9988,
+            "training_time": "01:18.45"
+          },
+          "pnn": {
+            "accuracy_pct": 100.0,
+            "sensitivity_pct": 100.0,
+            "specificity_pct": 100.0,
+            "gmean_sens_spec_pct": 100.0,
+            "ppv_pct": 100.0,
+            "npv_pct": 100.0,
+            "gmean_ppv_npv_pct": 100.0,
+            "precision_pct": 100.0,
+            "recall_pct": 100.0,
+            "f1_or_f_measure": 1.0,
+            "mcc": 1.0,
+            "auc": 1.0,
+            "training_time": "01:08.73"
+          }
+        }
+      },
+      "validation_phase": {
+        "confusion_matrices": {
+          "mlp": {
+            "TP": 431,
+            "FN": 13,
+            "FP": 12,
+            "TN": 227
+          },
+          "rbf": {
+            "TP": 429,
+            "FN": 15,
+            "FP": 12,
+            "TN": 227
+          },
+          "pnn": {
+            "TP": 438,
+            "FN": 6,
+            "FP": 10,
+            "TN": 229
+          }
+        },
+        "metrics": {
+          "mlp": {
+            "accuracy_pct": 96.34,
+            "sensitivity_pct": 97.07,
+            "specificity_pct": 94.98,
+            "gmean_sens_spec_pct": 96.02,
+            "ppv_pct": 97.29,
+            "npv_pct": 94.58,
+            "gmean_ppv_npv_pct": 95.93,
+            "precision_pct": 97.29,
+            "recall_pct": 97.07,
+            "f1_or_f_measure": 0.9718,
+            "mcc": 0.9196,
+            "auc": 0.99341
+          },
+          "rbf": {
+            "accuracy_pct": 96.05,
+            "sensitivity_pct": 96.62,
+            "specificity_pct": 94.98,
+            "gmean_sens_spec_pct": 95.8,
+            "ppv_pct": 97.28,
+            "npv_pct": 93.8,
+            "gmean_ppv_npv_pct": 95.52,
+            "precision_pct": 97.28,
+            "recall_pct": 96.62,
+            "f1_or_f_measure": 0.9695,
+            "mcc": 0.9134,
+            "auc": 0.9903
+          },
+          "pnn": {
+            "accuracy_pct": 97.66,
+            "sensitivity_pct": 98.65,
+            "specificity_pct": 95.82,
+            "gmean_sens_spec_pct": 97.22,
+            "ppv_pct": 97.77,
+            "npv_pct": 97.45,
+            "gmean_ppv_npv_pct": 97.61,
+            "precision_pct": 97.77,
+            "recall_pct": 98.65,
+            "f1_or_f_measure": 0.9821,
+            "mcc": 0.9484,
+            "auc": 0.9939
+          }
+        }
+      },
+      "ranking": {
+        "training_phase_best": "PNN",
+        "validation_phase_best": "PNN",
+        "paper_conclusion": "PNN is the best classifier overall; MLP second; RBF third"
+      }
+    },
+    "replication_gaps_and_ambiguities": {
+      "reported_but_not_fully_specified": [
+        "Exact train/validation fold composition",
+        "Random seed",
+        "Exact implementation software/version",
+        "Exact PNN smoothing factor value",
+        "Exact RBF center/width initialization details",
+        "Exact RWBS settings",
+        "Exact stopping criteria / epochs for MLP",
+        "Probability threshold used for final class assignment"
+      ],
+      "internal_inconsistencies": [
+        "MLP hidden units conflict: Table 1 says 7 hidden neurons, conclusion says best topology is 9-3-2",
+        "RBF neuron count conflict: Table 2 says 50 neurons, conclusion says best accuracy used 23 hidden neurons"
+      ],
+      "replication_risk": "Medium to high, because several key hyperparameters and optimization details are missing or inconsistent."
+    },
+    "practical_replication_takeaway": {
+      "most_reproducible_pipeline_from_paper": [
+        "Use original Wisconsin Breast Cancer dataset",
+        "Drop 16 rows with missing values",
+        "Use 9 numeric input features and binary benign/malignant target",
+        "Rescale features to [0,1]",
+        "Evaluate with 10-fold cross-validation",
+        "Train and compare MLP, RBF, and PNN",
+        "For MLP, use SCG and log-sigmoid hidden/output activations",
+        "For RBF, use Gaussian hidden units and tune hidden neuron count with RWBS-like search",
+        "For PNN, use Parzen-window probabilistic classifier with optimized smoothing factor"
+      ],
+      "expected_best_model": "PNN",
+      "expected_validation_metrics_approx": {
+        "accuracy_pct": 97.66,
+        "precision_pct": 97.77,
+        "recall_pct": 98.65,
+        "f1": 0.9821,
+        "auc": 0.9939
+      }
+    }
+  }
+}

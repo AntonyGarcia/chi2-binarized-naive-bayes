@@ -1,0 +1,320 @@
+{
+  "paper": {
+    "title": "Machine Learning Algorithms For Breast Cancer Prediction And Diagnosis",
+    "authors": [
+      "Mohammed Amine Naji",
+      "Sanaa El Filali",
+      "Kawtar Aarika",
+      "EL Habib Benlahmar",
+      "Rachida Ait Abdelouhahid",
+      "Olivier Debauche"
+    ],
+    "venue": "Procedia Computer Science",
+    "year": 2021,
+    "doi": "10.1016/j.procs.2021.07.062",
+    "source_file": "naji_et_al.pdf",
+    "citation": ":contentReference[oaicite:0]{index=0}"
+  },
+  "dataset": {
+    "name": "Breast Cancer Wisconsin Diagnostic (WBCD)",
+    "source": "University of Wisconsin Hospitals Madison Breast Cancer Database",
+    "instances": 569,
+    "classes": 2,
+    "class_distribution": {
+      "benign": 357,
+      "malignant": 212,
+      "benign_pct": 62.74,
+      "malignant_pct": 37.26
+    },
+    "reported_attributes": 11,
+    "reported_attributes_list": [
+      "Id",
+      "Diagnosis",
+      "Radius",
+      "Texture",
+      "Area",
+      "Perimeter",
+      "Smoothness",
+      "Compactness",
+      "Concavity",
+      "Concave points",
+      "Symmetry",
+      "Fractal dimension"
+    ],
+    "feature_origin": "Features are computed from a digitized image of a breast cancer sample obtained from fine-needle aspirate (FNA), describing characteristics of cell nuclei.",
+    "citations": [
+      ":contentReference[oaicite:1]{index=1}"
+    ]
+  },
+  "algorithms": {
+    "models_compared": [
+      "Support Vector Machine (SVM)",
+      "Random Forest",
+      "Logistic Regression",
+      "Decision Tree (C4.5)",
+      "K-Nearest Neighbors (KNN)"
+    ],
+    "best_model": "SVM",
+    "implementation_environment": {
+      "language": "Python",
+      "library": "scikit-learn",
+      "environment": "Anaconda"
+    },
+    "citations": [
+      ":contentReference[oaicite:2]{index=2}",
+      ":contentReference[oaicite:3]{index=3}"
+    ]
+  },
+  "preprocessing": {
+    "pipeline_steps_reported": [
+      "data cleaning",
+      "select attributes",
+      "set target role",
+      "features extraction"
+    ],
+    "train_test_split": {
+      "train_pct": 75,
+      "test_pct": 25,
+      "method": "train_test_split"
+    },
+    "replication_note": "The paper names preprocessing stages but does not specify exact cleaning operations, selected columns, scaling/normalization, missing-value handling, encoding, or feature extraction formulas.",
+    "citations": [
+      ":contentReference[oaicite:4]{index=4}"
+    ]
+  },
+  "hyperparameters": {
+    "reported": {},
+    "not_reported": [
+      "SVM kernel",
+      "SVM C",
+      "SVM gamma",
+      "Random Forest n_estimators",
+      "Random Forest max_depth",
+      "Random Forest criterion",
+      "Logistic Regression regularization",
+      "Decision Tree max_depth/min_samples_split/criterion",
+      "KNN k",
+      "distance metric",
+      "random seed",
+      "stratification details",
+      "feature scaling settings"
+    ],
+    "replication_risk": "High, because none of the actual model hyperparameters are disclosed.",
+    "citations": [
+      ":contentReference[oaicite:5]{index=5}",
+      ":contentReference[oaicite:6]{index=6}"
+    ]
+  },
+  "evaluation_protocol": {
+    "metrics_reported": [
+      "confusion matrix",
+      "accuracy",
+      "precision",
+      "sensitivity",
+      "F1 score",
+      "AUC"
+    ],
+    "notes": [
+      "The paper says results are discussed for both training and testing sets.",
+      "Reported main comparison emphasizes testing accuracy.",
+      "No cross-validation is reported."
+    ],
+    "citations": [
+      ":contentReference[oaicite:7]{index=7}",
+      ":contentReference[oaicite:8]{index=8}"
+    ]
+  },
+  "results": {
+    "accuracy": {
+      "SVM": {
+        "train_pct": 98.4,
+        "test_pct": 97.2
+      },
+      "Random Forest": {
+        "train_pct": 99.8,
+        "test_pct": 96.5
+      },
+      "Logistic Regression": {
+        "train_pct": 95.5,
+        "test_pct": 95.8
+      },
+      "Decision Tree_C4_5": {
+        "train_pct": 98.8,
+        "test_pct": 95.1
+      },
+      "KNN": {
+        "train_pct": 94.6,
+        "test_pct": 93.7
+      }
+    },
+    "confusion_matrices": {
+      "SVM": {
+        "actual_malignant": {
+          "pred_malignant": 201,
+          "pred_benign": 11
+        },
+        "actual_benign": {
+          "pred_malignant": 1,
+          "pred_benign": 356
+        }
+      },
+      "Random Forest": {
+        "actual_malignant": {
+          "pred_malignant": 196,
+          "pred_benign": 16
+        },
+        "actual_benign": {
+          "pred_malignant": 7,
+          "pred_benign": 350
+        }
+      },
+      "Logistic Regression": {
+        "actual_malignant": {
+          "pred_malignant": 201,
+          "pred_benign": 11
+        },
+        "actual_benign": {
+          "pred_malignant": 5,
+          "pred_benign": 352
+        }
+      },
+      "Decision Tree_C4_5": {
+        "actual_malignant": {
+          "pred_malignant": 195,
+          "pred_benign": 17
+        },
+        "actual_benign": {
+          "pred_malignant": 22,
+          "pred_benign": 335
+        }
+      },
+      "KNN": {
+        "actual_malignant": {
+          "pred_malignant": 201,
+          "pred_benign": 11
+        },
+        "actual_benign": {
+          "pred_malignant": 7,
+          "pred_benign": 350
+        }
+      }
+    },
+    "classwise_metrics": {
+      "SVM": {
+        "benign": {
+          "precision": 0.98,
+          "sensitivity": 0.94,
+          "f1_score": 0.96
+        },
+        "malignant": {
+          "precision": 0.97,
+          "sensitivity": 0.99,
+          "f1_score": 0.98
+        }
+      },
+      "Random Forest": {
+        "benign": {
+          "precision": 0.96,
+          "sensitivity": 0.94,
+          "f1_score": 0.95
+        },
+        "malignant": {
+          "precision": 0.97,
+          "sensitivity": 0.98,
+          "f1_score": 0.97
+        }
+      },
+      "Logistic Regression": {
+        "benign": {
+          "precision": 0.98,
+          "sensitivity": 0.91,
+          "f1_score": 0.94
+        },
+        "malignant": {
+          "precision": 0.95,
+          "sensitivity": 0.99,
+          "f1_score": 0.97
+        }
+      },
+      "Decision Tree_C4_5": {
+        "benign": {
+          "precision": 0.94,
+          "sensitivity": 0.92,
+          "f1_score": 0.93
+        },
+        "malignant": {
+          "precision": 0.96,
+          "sensitivity": 0.97,
+          "f1_score": 0.96
+        }
+      },
+      "KNN": {
+        "benign": {
+          "precision": 0.92,
+          "sensitivity": 0.91,
+          "f1_score": 0.91
+        },
+        "malignant": {
+          "precision": 0.95,
+          "sensitivity": 0.96,
+          "f1_score": 0.95
+        }
+      }
+    },
+    "auc": {
+      "SVM": 0.966,
+      "Random Forest": 0.96,
+      "Logistic Regression": 0.947,
+      "Decision Tree_C4_5": 0.945,
+      "KNN": 0.952
+    },
+    "paper_conclusion": {
+      "best_model": "SVM",
+      "best_test_accuracy_pct": 97.2,
+      "reported_best_precision_pct": 97.5,
+      "reported_best_auc_pct": 96.6
+    },
+    "citations": [
+      ":contentReference[oaicite:9]{index=9}",
+      ":contentReference[oaicite:10]{index=10}"
+    ]
+  },
+  "replication_takeaways": {
+    "minimum_reproducible_setup_from_paper": [
+      "Use the WBCD dataset with 569 samples.",
+      "Apply a 75/25 train-test split using train_test_split.",
+      "Train SVM, Random Forest, Logistic Regression, Decision Tree (C4.5), and KNN in Python with scikit-learn.",
+      "Evaluate with confusion matrix, accuracy, precision, sensitivity, F1 score, and AUC.",
+      "Expect SVM to be the best-performing model."
+    ],
+    "expected_best_metrics": {
+      "model": "SVM",
+      "test_accuracy_pct": 97.2,
+      "auc": 0.966,
+      "classwise_precision": {
+        "benign": 0.98,
+        "malignant": 0.97
+      },
+      "classwise_sensitivity": {
+        "benign": 0.94,
+        "malignant": 0.99
+      },
+      "classwise_f1": {
+        "benign": 0.96,
+        "malignant": 0.98
+      }
+    },
+    "missing_details_blocking_exact_reproduction": [
+      "No exact preprocessing code or feature selection recipe",
+      "No model hyperparameters",
+      "No random seed",
+      "No train/test split reproducibility details",
+      "No probability threshold details",
+      "No standard deviation or repeated-run results"
+    ],
+    "citations": [
+      ":contentReference[oaicite:11]{index=11}",
+      ":contentReference[oaicite:12]{index=12}"
+    ]
+  }
+}

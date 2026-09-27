@@ -1,0 +1,530 @@
+{
+  "paper": {
+    "title": "Optimized Neural Networks for Diabetes Classification Using Pima Indians Diabetes Database",
+    "dataset_used": "Pima Indians Diabetes Database (PIDD)",
+    "task": "Binary classification of diabetes outcome",
+    "replication_status": {
+      "can_fully_replicate_from_paper_alone": false,
+      "reason": [
+        "The paper omits exact CNN architectural details such as number of Conv1D filters, pooling size/stride, and exact dense stack sizes after convolution.",
+        "It does not provide exact FNN layer ordering beyond the diagram and prose, nor whether both L1 and L2 were actually used or only L2 in the final model.",
+        "It does not specify random seed, framework/library versions, exact train/validation/test split procedure, or whether splitting was stratified/shuffled.",
+        "It mentions duplicate entries but does not report how many duplicates were removed, or whether removal occurred before/after splitting.",
+        "It does not report class weighting, threshold selection, or calibration details despite dataset imbalance."
+      ]
+    },
+    "source_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "dataset": {
+    "name": "Pima Indians Diabetes Database (PIDD)",
+    "instances_total": 768,
+    "target": {
+      "name": "Outcome",
+      "type": "binary",
+      "encoding": {
+        "0": "non-diabetic",
+        "1": "diabetic"
+      }
+    },
+    "class_distribution": {
+      "positive_diabetic": 268,
+      "negative_non_diabetic": 500,
+      "positive_pct": 34.9,
+      "negative_pct": 65.1,
+      "imbalanced": true
+    },
+    "population_note": "Female diabetic patients",
+    "features": [
+      {
+        "name": "Pregnancies",
+        "unit": "unitless",
+        "range_reported": "0-17",
+        "dtype": "int64"
+      },
+      {
+        "name": "Glucose",
+        "unit": "mg/dL",
+        "range_reported": "0-199",
+        "dtype": "int64"
+      },
+      {
+        "name": "BloodPressure",
+        "unit": "mmHg",
+        "range_reported": "0-122",
+        "dtype": "int64"
+      },
+      {
+        "name": "SkinThickness",
+        "unit": "mm",
+        "range_reported": "0-99",
+        "dtype": "int64"
+      },
+      {
+        "name": "Insulin",
+        "unit": "mu U/ml",
+        "range_reported": "0-846",
+        "dtype": "int64"
+      },
+      {
+        "name": "BMI",
+        "unit": "kg/m2",
+        "range_reported": "0-67.1",
+        "dtype": "float64"
+      },
+      {
+        "name": "DiabetesPedigreeFunction",
+        "unit": "unitless",
+        "range_reported": "0.078-2.42",
+        "dtype": "float64"
+      },
+      {
+        "name": "Age",
+        "unit": "years",
+        "range_reported": "21-81",
+        "dtype": "int64"
+      }
+    ],
+    "reported_correlated_features_with_target": [
+      "Glucose",
+      "BMI",
+      "Age",
+      "Pregnancies",
+      "Insulin"
+    ]
+  },
+  "preprocessing": {
+    "missing_values_reported": "No missing values reported in the dataset.",
+    "zero_value_cleaning": {
+      "applied": true,
+      "affected_features": [
+        "Glucose",
+        "BloodPressure",
+        "SkinThickness",
+        "Insulin",
+        "BMI"
+      ],
+      "method": "Replace zero values with the corresponding mean value of each feature.",
+      "exact_means_used": null,
+      "note": "The exact computed means are not reported."
+    },
+    "duplicate_entries": {
+      "reported_present": true,
+      "removal_implied": true,
+      "count_removed": null,
+      "note": "The paper states that duplicate entries were present, highlighting the importance of cleaning, but does not quantify or operationalize duplicate removal."
+    },
+    "feature_target_split": {
+      "X": "All columns except Outcome",
+      "y": "Outcome"
+    },
+    "normalization": {
+      "method_reported": "Standard Scalar (Z-Score)",
+      "likely_standard_name": "StandardScaler / z-score standardization",
+      "fit_scope": null,
+      "note": "The paper does not explicitly state whether the scaler was fit on training data only."
+    },
+    "data_split": {
+      "train_pct": 0.6,
+      "validation_pct": 0.2,
+      "test_pct": 0.2,
+      "train_samples": 460,
+      "validation_samples": 154,
+      "test_samples": 154,
+      "stratified": null,
+      "random_state": null,
+      "shuffle": null
+    },
+    "cnn_input_reshaping": {
+      "applied": true,
+      "method": "Tabular data structured as a one-dimensional array with an additional channel dimension for Conv1D input.",
+      "exact_shape_notation": null
+    }
+  },
+  "algorithms": [
+    {
+      "name": "Feedforward Neural Network",
+      "abbreviation": "FNN",
+      "role_in_paper": "Primary proposed model",
+      "problem_type": "Binary classification",
+      "input_dim": 8,
+      "output_dim": 1,
+      "architecture": {
+        "reported_components": [
+          "Input layer handling 8 variables",
+          "Two hidden layers",
+          "Batch normalization",
+          "Dropout layers",
+          "Output layer with sigmoid activation"
+        ],
+        "flow_diagram_sequence_visible": [
+          "Input",
+          "Dense",
+          "Batch Normalization",
+          "Dense",
+          "Dropout",
+          "Dense",
+          "Dropout",
+          "Output"
+        ],
+        "hidden_layer_count_reported_in_text": 2,
+        "final_optimal_hidden_units": [
+          8,
+          16
+        ],
+        "hidden_activation_optimal": "tanh",
+        "output_activation": "sigmoid",
+        "ambiguous_or_missing": [
+          "Exact full layer order versus diagram is not perfectly specified in prose.",
+          "Whether batch normalization is after the first dense only or elsewhere is not fully specified.",
+          "Whether there are exactly 2 or 3 Dense layers before output depends on interpretation of the diagram."
+        ]
+      },
+      "training": {
+        "loss_function": "Binary crossentropy",
+        "optimizer_search_space": [
+          "Adam"
+        ],
+        "optimizer_optimal": "Adam",
+        "learning_rate_search_space": [
+          0.001
+        ],
+        "learning_rate_optimal": 0.001,
+        "dropout_rate_search_space": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "dropout_rate_optimal": 0.2,
+        "batch_size_search_space": [
+          4,
+          8,
+          16
+        ],
+        "batch_size_optimal": 8,
+        "units_in_hidden_layers_search_space": [
+          8,
+          16,
+          32
+        ],
+        "activation_function_search_space": [
+          "ReLU",
+          "tanh"
+        ],
+        "l2_rate_search_space": [
+          0.01
+        ],
+        "l2_rate_optimal": 0.01,
+        "callbacks": {
+          "early_stopping": {
+            "monitor": "val_loss",
+            "patience": 20
+          },
+          "reduce_lr_on_plateau": {
+            "monitor": "val_loss",
+            "factor": 0.2,
+            "patience": 20,
+            "min_lr": 0.001
+          }
+        },
+        "grid_search_used": true,
+        "epochs_reported": {
+          "stability_point": 100,
+          "exact_max_epochs": null
+        }
+      },
+      "results": {
+        "validation_loss": 0.51,
+        "test_loss": 0.5,
+        "validation_accuracy": 0.72,
+        "test_accuracy": 0.82,
+        "precision": 0.72,
+        "recall_sensitivity": 0.69,
+        "f1_score": 0.71,
+        "specificity": 0.88,
+        "roc_auc": 0.85,
+        "log_loss": 0.47,
+        "false_positive_rate": 0.12,
+        "youdens_index": 0.57,
+        "mcc": 0.58,
+        "table_v_values": {
+          "accuracy_pct": 81.82,
+          "precision_pct": 72.34,
+          "specificity_pct": 87.62,
+          "sensitivity_pct": 69.39,
+          "f1_score_pct": 70.83,
+          "auc": 0.851
+        }
+      }
+    },
+    {
+      "name": "Convolutional Neural Network",
+      "abbreviation": "CNN",
+      "role_in_paper": "Primary proposed model",
+      "problem_type": "Binary classification",
+      "input_format": "1D tabular input with extra channel dimension",
+      "architecture": {
+        "reported_components": [
+          "Conv1D",
+          "MaxPooling1D",
+          "Flatten",
+          "Dense",
+          "Dropout",
+          "Output"
+        ],
+        "text_description": [
+          "Convolutional layer customizable with different filter sizes, activation functions, and regularization parameters",
+          "Followed by a max-pooling layer",
+          "Dropout layer to mitigate overfitting",
+          "Flatten",
+          "Fully connected dense layer",
+          "Final sigmoid output layer"
+        ],
+        "optimal_dense_layer_1_units": 16,
+        "optimal_kernel_size": 7,
+        "optimal_activation": "tanh",
+        "output_activation": "sigmoid",
+        "missing_architecture_details": [
+          "Number of convolution filters not reported",
+          "Pooling size/stride not reported",
+          "Whether convolution padding was same/valid not reported",
+          "Whether there are additional dense layers beyond one post-flatten dense layer is not fully specified",
+          "Whether batch normalization was used in CNN is not explicitly stated"
+        ]
+      },
+      "training": {
+        "loss_function": "Binary crossentropy",
+        "optimizer_optimal": "Adam",
+        "learning_rate_optimal": 0.001,
+        "dropout_rate_optimal": 0.2,
+        "batch_size_optimal": 16,
+        "l2_rate_optimal": 0.001,
+        "grid_search_used": true,
+        "grid_search_dimensions_described_in_text": [
+          "learning rate",
+          "dropout rate",
+          "dense layer size",
+          "activation function",
+          "batch size",
+          "filter dimensions",
+          "regularization strength",
+          "optimizer"
+        ],
+        "callbacks_described": {
+          "early_stopping": true,
+          "reduce_lr_on_plateau": true
+        },
+        "exact_callback_parameters": null,
+        "epochs_reported": {
+          "strong_outcomes_within": 45,
+          "exact_max_epochs": null
+        }
+      },
+      "results": {
+        "validation_loss": 0.5,
+        "test_loss": 0.49,
+        "validation_accuracy": 0.73,
+        "test_accuracy": 0.8,
+        "precision": 0.7,
+        "recall_sensitivity": 0.67,
+        "f1_score": 0.69,
+        "specificity": 0.87,
+        "roc_auc": 0.84,
+        "log_loss": 0.48,
+        "false_positive_rate": 0.13,
+        "youdens_index": 0.54,
+        "mcc": 0.55,
+        "table_v_values": {
+          "accuracy_pct": 80.52,
+          "precision_pct": 70.21,
+          "specificity_pct": 86.67,
+          "sensitivity_pct": 67.35,
+          "f1_score_pct": 68.75,
+          "auc": 0.837
+        }
+      }
+    }
+  ],
+  "comparative_baselines_reported": [
+    {
+      "source": "[32], 2022",
+      "algorithms": [
+        {
+          "name": "KNN",
+          "accuracy_pct": 78.58,
+          "specificity_pct": 65.9,
+          "sensitivity_pct": 78.6,
+          "auc": 0.838
+        },
+        {
+          "name": "RF",
+          "accuracy_pct": 79.83,
+          "specificity_pct": 71.4,
+          "sensitivity_pct": 79.8,
+          "auc": 0.836
+        },
+        {
+          "name": "DT",
+          "accuracy_pct": 76.07,
+          "specificity_pct": 69.1,
+          "sensitivity_pct": 76.1,
+          "auc": 0.785
+        },
+        {
+          "name": "MLP",
+          "accuracy_pct": 77.6,
+          "specificity_pct": 67.9,
+          "sensitivity_pct": 77.6,
+          "auc": 0.846
+        }
+      ]
+    },
+    {
+      "source": "[33], 2023",
+      "algorithms": [
+        {
+          "name": "J48 DT",
+          "variant": "All fact.",
+          "accuracy_pct": 74.78,
+          "precision_pct": 70.86,
+          "specificity_pct": 59.63,
+          "sensitivity_pct": 88.43,
+          "f1_score_pct": 78.68,
+          "auc": 0.785
+        },
+        {
+          "name": "J48 DT",
+          "variant": "3-fact.",
+          "accuracy_pct": 79.57,
+          "precision_pct": 89.4,
+          "specificity_pct": 75.0,
+          "sensitivity_pct": 81.33,
+          "f1_score_pct": 85.17,
+          "auc": 0.813
+        },
+        {
+          "name": "J48 DT",
+          "variant": "5-fact",
+          "accuracy_pct": 78.67,
+          "precision_pct": 81.88,
+          "specificity_pct": 63.29,
+          "sensitivity_pct": 86.75,
+          "f1_score_pct": 84.24,
+          "auc": 0.808
+        },
+        {
+          "name": "RF",
+          "variant": "All fact.",
+          "accuracy_pct": 75.22,
+          "precision_pct": 70.2,
+          "specificity_pct": 59.82,
+          "sensitivity_pct": 89.83,
+          "f1_score_pct": 78.81,
+          "auc": 0.862
+        },
+        {
+          "name": "RF",
+          "variant": "3-fact.",
+          "accuracy_pct": 75.22,
+          "precision_pct": 82.12,
+          "specificity_pct": 64.47,
+          "sensitivity_pct": 80.52,
+          "f1_score_pct": 81.31,
+          "auc": 0.823
+        },
+        {
+          "name": "RF",
+          "variant": "5-fact",
+          "accuracy_pct": 79.13,
+          "precision_pct": 81.6,
+          "specificity_pct": 62.03,
+          "sensitivity_pct": 88.08,
+          "f1_score_pct": 84.71,
+          "auc": 0.818
+        },
+        {
+          "name": "NB",
+          "variant": "All fact.",
+          "accuracy_pct": 75.65,
+          "precision_pct": 70.86,
+          "specificity_pct": 60.36,
+          "sensitivity_pct": 89.92,
+          "f1_score_pct": 79.26,
+          "auc": 0.846
+        },
+        {
+          "name": "NB",
+          "variant": "3-fact.",
+          "accuracy_pct": 73.91,
+          "precision_pct": 80.79,
+          "specificity_pct": 62.34,
+          "sensitivity_pct": 79.74,
+          "f1_score_pct": 80.26,
+          "auc": 0.862
+        },
+        {
+          "name": "NB",
+          "variant": "5-fact",
+          "accuracy_pct": 77.83,
+          "precision_pct": 81.25,
+          "specificity_pct": 62.03,
+          "sensitivity_pct": 86.09,
+          "f1_score_pct": 83.6,
+          "auc": 0.841
+        }
+      ]
+    }
+  ],
+  "evaluation": {
+    "metrics_reported": [
+      "validation_loss",
+      "test_loss",
+      "validation_accuracy",
+      "test_accuracy",
+      "precision",
+      "recall/sensitivity",
+      "f1_score",
+      "specificity",
+      "roc_auc",
+      "log_loss",
+      "false_positive_rate",
+      "youdens_index",
+      "matthews_correlation_coefficient"
+    ],
+    "best_model_claim": "FNN slightly outperformed CNN on the reported test metrics."
+  },
+  "replication_checklist": {
+    "available_from_paper": [
+      "Dataset identity and feature list",
+      "Zero-to-mean replacement for 5 features",
+      "Standard scaling / z-score normalization",
+      "Train/validation/test split proportions and counts",
+      "FNN search space and selected optimal values",
+      "CNN selected optimal values for optimizer, learning rate, dropout, batch size, dense units, kernel size, activation, and L2 rate",
+      "Evaluation metrics and final performance values"
+    ],
+    "missing_for_exact_reproduction": [
+      "Exact code",
+      "Random seed",
+      "Exact duplicate removal logic and number removed",
+      "Exact scaler fitting protocol",
+      "Exact split function and stratification settings",
+      "Threshold used for converting probabilities to labels",
+      "Exact FNN implementation code and layer order",
+      "Exact CNN implementation code with filter counts, pool sizes, and padding",
+      "Library/framework versions and hardware",
+      "Full training schedule / max epochs"
+    ]
+  },
+  "provenance": {
+    "extracted_from": "user-uploaded PDF",
+    "note": "Fields set to null indicate the paper did not report them clearly enough."
+  }
+}

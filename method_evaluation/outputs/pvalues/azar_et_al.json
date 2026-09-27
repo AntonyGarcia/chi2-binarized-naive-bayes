@@ -1,0 +1,26 @@
+[
+ {
+  "test": "DeLong",
+  "p_value": 0.24224325068003716
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.1258867891739632
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.010900872350671486
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.036713856362704134
+ },
+ {
+  "test": "McNemar",
+  "p_value": 1.0
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.1698105050855175
+ }
+]

@@ -1,0 +1,82 @@
+[
+ {
+  "test": "DeLong",
+  "p_value": 0.019571118120699966
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.003997953293270572
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.07129162286014255
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.004009177254135311
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.0211325302210227
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.27581298787408404
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.010569246415133722
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.1471635003851904
+ },
+ {
+  "test": "DeLong",
+  "p_value": 1.856607524372817e-11
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.002161561496030971
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.000518798828125
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.01181793212890625
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.6072387695312499
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.0005320055051392492
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.11531829833984375
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.017622090962324415
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.0002771615982055664
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.008528852154051912
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.008528852154051912
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.0029671058986476154
+ }
+]

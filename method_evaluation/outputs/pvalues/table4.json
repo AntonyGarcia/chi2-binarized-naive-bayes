@@ -1,0 +1,116 @@
+{
+ "Diabetes": {
+  "mutual_info": {
+   "DeLong": 0.3853461207473904,
+   "McNemar": 0.45098231926888255
+  },
+  "gini_gain": {
+   "DeLong": 0.4217799172495267,
+   "McNemar": 1.0
+  },
+  "information_gain": {
+   "DeLong": 0.3853461207473904,
+   "McNemar": 0.45098231926888255
+  },
+  "auc_split": {
+   "DeLong": 0.5186897492591034,
+   "McNemar": 0.7518296340458492
+  },
+  "otsu": {
+   "DeLong": 0.3044267056605119,
+   "McNemar": 0.6276258050283592
+  },
+  "median": {
+   "DeLong": 0.5024119164102773,
+   "McNemar": 0.21930264967931531
+  },
+  "mean": {
+   "DeLong": 0.20563723462156935,
+   "McNemar": 0.45170432656693205
+  },
+  "youden_j": {
+   "DeLong": 0.5186897492591034,
+   "McNemar": 0.7518296340458492
+  },
+  "kmeans_midpoint": {
+   "DeLong": 0.08583488917022752,
+   "McNemar": 0.28074880294815185
+  }
+ },
+ "Breast Cancer": {
+  "mutual_info": {
+   "DeLong": 0.007629345080143077,
+   "McNemar": 0.3876953125
+  },
+  "gini_gain": {
+   "DeLong": 0.2876459710592455,
+   "McNemar": 1.0
+  },
+  "information_gain": {
+   "DeLong": 0.007629345080143077,
+   "McNemar": 0.3876953125
+  },
+  "auc_split": {
+   "DeLong": 0.04682785018270705,
+   "McNemar": 0.1698105050855175
+  },
+  "otsu": {
+   "DeLong": 0.6903707335674825,
+   "McNemar": 0.28627872467041016
+  },
+  "median": {
+   "DeLong": 0.010230947395488712,
+   "McNemar": 0.027965569965861064
+  },
+  "mean": {
+   "DeLong": 0.3717992779109296,
+   "McNemar": 0.23013934044341314
+  },
+  "youden_j": {
+   "DeLong": 0.013280880241282563,
+   "McNemar": 0.5412561893463135
+  },
+  "kmeans_midpoint": {
+   "DeLong": 0.06902117262991941,
+   "McNemar": 0.38331031799316406
+  }
+ },
+ "Heart Disease": {
+  "mutual_info": {
+   "DeLong": 0.6971251503923622,
+   "McNemar": 1.0
+  },
+  "gini_gain": {
+   "DeLong": 1.0,
+   "McNemar": 1.0
+  },
+  "information_gain": {
+   "DeLong": 0.6971251503923622,
+   "McNemar": 1.0
+  },
+  "auc_split": {
+   "DeLong": 0.2693648958965079,
+   "McNemar": 1.0
+  },
+  "otsu": {
+   "DeLong": 0.80549536135157,
+   "McNemar": 0.40465676192728617
+  },
+  "median": {
+   "DeLong": 0.4464089941510351,
+   "McNemar": 0.5234670639038086
+  },
+  "mean": {
+   "DeLong": 0.3593402948754355,
+   "McNemar": 1.0
+  },
+  "youden_j": {
+   "DeLong": 0.7642633825816458,
+   "McNemar": 0.8711314915971582
+  },
+  "kmeans_midpoint": {
+   "DeLong": 0.7407182600028314,
+   "McNemar": 1.0
+  }
+ }
+}

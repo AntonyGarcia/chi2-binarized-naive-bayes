@@ -1,0 +1,195 @@
+{
+  "paper": {
+    "title": "Performance Evaluation of Machine Learning Algorithms for Prediction of Cardiac Failure",
+    "citation": ":contentReference[oaicite:0]{index=0}"
+  },
+  "high_level_summary": {
+    "objective": "Compare multiple supervised machine learning algorithms for heart failure prediction using a Kaggle heart disease dataset.",
+    "best_model": "Naïve Bayes",
+    "best_accuracy_percent": 85.87
+  },
+  "dataset": {
+    "name": "Heart.csv (Kaggle, Andras Janosi dataset)",
+    "samples": 918,
+    "features_count": 12,
+    "train_test_split": {
+      "train": 642,
+      "test": 276
+    },
+    "target": "Heart Disease (0/1)",
+    "features": [
+      "Age",
+      "Sex",
+      "Chest Pain Type",
+      "Resting BP",
+      "Cholesterol",
+      "Fasting Blood Sugar",
+      "Resting ECG",
+      "MaxHR",
+      "Exercise Angina",
+      "Old Peak",
+      "ST_Slope"
+    ]
+  },
+  "algorithms": [
+    "Naïve Bayes",
+    "Random Forest",
+    "Support Vector Machine (SVM)",
+    "K-Nearest Neighbors (KNN)",
+    "Decision Tree",
+    "Logistic Regression"
+  ],
+  "preprocessing": {
+    "steps": [
+      "Label encoding of categorical variables",
+      "Min-Max normalization (0–1 scaling) for continuous variables"
+    ],
+    "categorical_features": [
+      "Sex",
+      "Resting ECG",
+      "Chest Pain Type",
+      "Exercise Angina",
+      "ST_Slope"
+    ],
+    "numerical_features_scaled": [
+      "Age",
+      "Resting BP",
+      "Cholesterol",
+      "MaxHR"
+    ],
+    "missing_details": [
+      "Missing value handling not described",
+      "Outlier handling not described",
+      "Feature selection method not clearly specified"
+    ]
+  },
+  "training_protocol": {
+    "split": "70% training / 30% testing",
+    "validation": "Cross-validation used for hyperparameter tuning (details not given)",
+    "tools": [
+      "Python 3.10",
+      "Scikit-learn",
+      "Jupyter Notebook",
+      "Anaconda"
+    ],
+    "hardware": "Intel i3 CPU, 8GB RAM"
+  },
+  "models": {
+    "naive_bayes": {
+      "type": "Gaussian/standard NB (not specified)",
+      "hyperparameters": "NOT REPORTED"
+    },
+    "random_forest": {
+      "hyperparameters": "NOT REPORTED"
+    },
+    "svm": {
+      "kernel": "NOT SPECIFIED",
+      "hyperparameters": "NOT REPORTED"
+    },
+    "knn": {
+      "k": "NOT REPORTED",
+      "distance_metric": "NOT REPORTED"
+    },
+    "decision_tree": {
+      "hyperparameters": "NOT REPORTED"
+    },
+    "logistic_regression": {
+      "hyperparameters": "NOT REPORTED"
+    }
+  },
+  "metrics": {
+    "classification": [
+      "Accuracy",
+      "Precision",
+      "Recall",
+      "F1 Score",
+      "AUC-ROC"
+    ],
+    "definitions": {
+      "accuracy": "(TP + TN) / (TP + TN + FP + FN)",
+      "precision": "TP / (TP + FP)",
+      "recall": "TP / (TP + FN)",
+      "f1": "2 * (precision * recall) / (precision + recall)"
+    }
+  },
+  "results": [
+    {
+      "model": "Naïve Bayes",
+      "accuracy": 85.87,
+      "recall": 0.883,
+      "precision": 0.878,
+      "f1_score": 0.880,
+      "auc": 0.853
+    },
+    {
+      "model": "Random Forest",
+      "accuracy": 84.42,
+      "recall": 0.871,
+      "precision": 0.865,
+      "f1_score": 0.868,
+      "auc": 0.838
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 84.06,
+      "recall": 0.877,
+      "precision": 0.856,
+      "f1_score": 0.866,
+      "auc": 0.832
+    },
+    {
+      "model": "KNN",
+      "accuracy": 83.69,
+      "recall": 0.883,
+      "precision": 0.847,
+      "f1_score": 0.864,
+      "auc": 0.827
+    },
+    {
+      "model": "SVM",
+      "accuracy": 83.33,
+      "recall": 0.865,
+      "precision": 0.854,
+      "f1_score": 0.859,
+      "auc": 0.826
+    },
+    {
+      "model": "Decision Tree",
+      "accuracy": 80.07,
+      "recall": 0.779,
+      "precision": 0.869,
+      "f1_score": 0.822,
+      "auc": 0.805
+    }
+  ],
+  "reproducibility": {
+    "status": "PARTIALLY REPRODUCIBLE",
+    "available": [
+      "Dataset identity and size",
+      "Feature list",
+      "Preprocessing steps (high-level)",
+      "Train/test split",
+      "Evaluation metrics",
+      "Final results table"
+    ],
+    "missing": [
+      "Exact hyperparameters for all models",
+      "Cross-validation configuration",
+      "Random seeds",
+      "Exact implementation details (e.g., SVM kernel, K in KNN)",
+      "Handling of missing data",
+      "Feature selection procedure"
+    ]
+  },
+  "recommended_reproduction": {
+    "steps": [
+      "Download Heart.csv dataset (Kaggle)",
+      "Apply label encoding to categorical variables",
+      "Apply Min-Max scaling to numerical features",
+      "Split data into 70/30 train/test",
+      "Train the 6 models using scikit-learn defaults",
+      "Tune hyperparameters via grid search with cross-validation",
+      "Evaluate using accuracy, precision, recall, F1, and ROC-AUC"
+    ]
+  }
+}

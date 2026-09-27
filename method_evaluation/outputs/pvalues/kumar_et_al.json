@@ -1,0 +1,50 @@
+[
+ {
+  "test": "DeLong",
+  "p_value": 0.09228625560002471
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.03265433156308536
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.08268298633878872
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.1497719215567708
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.8147298767228957
+ },
+ {
+  "test": "DeLong",
+  "p_value": 4.5433346719225074e-26
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.4567504024231692
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.0006244998561982836
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.602537006105314
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.17530808080826962
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.04813101378106178
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.0011071313147878513
+ }
+]

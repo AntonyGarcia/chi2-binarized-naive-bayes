@@ -1,0 +1,179 @@
+{
+  "paper": {
+    "title": "Predictive Classifier for Cardiovascular Disease Based on Stacking Model Fusion",
+    "citation": ":contentReference[oaicite:0]{index=0}"
+  },
+  "high_level_summary": {
+    "objective": "Propose a stacking ensemble model to improve cardiovascular disease prediction accuracy over individual ML models.",
+    "key_idea": "Use multiple diverse base learners and a logistic regression meta-learner, combined with SHAP-based feature selection.",
+    "best_model": "Stacking ensemble",
+    "best_accuracy_percent": 89.86,
+    "best_auc": 0.95
+  },
+  "dataset": {
+    "primary_dataset": {
+      "name": "Fused Heart Dataset (UCI)",
+      "sources": [
+        "Cleveland",
+        "Hungarian",
+        "Switzerland",
+        "Long Beach VA",
+        "Stalog (Heart)"
+      ],
+      "samples_original": 1190,
+      "samples_final": 918,
+      "features_initial": 11,
+      "features_final": 10,
+      "feature_removed": "RestingECG"
+    },
+    "secondary_dataset": {
+      "name": "Heart Attack Dataset",
+      "purpose": "Generalization evaluation"
+    },
+    "train_test_split": "80/20"
+  },
+  "features": [
+    "Age",
+    "Sex",
+    "ChestPainType",
+    "RestingBP",
+    "Cholesterol",
+    "FastingBS",
+    "RestingECG (removed after feature selection)",
+    "MaxHR",
+    "ExerciseAngina",
+    "Oldpeak",
+    "ST_Slope"
+  ],
+  "preprocessing": {
+    "steps": [
+      "Dataset fusion from multiple sources",
+      "Duplicate removal",
+      "Normalization",
+      "Feature selection using GBDT + SHAP"
+    ],
+    "feature_selection": {
+      "method": "Embedded GBDT + SHAP",
+      "threshold": 0.02,
+      "removed_feature": "RestingECG"
+    }
+  },
+  "algorithms": {
+    "candidate_models": [
+      "SVM",
+      "KNN",
+      "Logistic Regression",
+      "Random Forest",
+      "Extra Trees",
+      "GBDT",
+      "XGBoost",
+      "LightGBM",
+      "CatBoost",
+      "MLP"
+    ],
+    "selected_base_learners": [
+      "Logistic Regression",
+      "Random Forest",
+      "Extra Trees",
+      "MLP",
+      "CatBoost"
+    ],
+    "meta_learner": "Logistic Regression"
+  },
+  "model_architecture": {
+    "type": "Two-layer stacking ensemble",
+    "layer_1": {
+      "models": [
+        "LR",
+        "RF",
+        "ET",
+        "MLP",
+        "CatBoost"
+      ],
+      "training": "5-fold cross-validation",
+      "output": "Predictions stacked as features"
+    },
+    "layer_2": {
+      "model": "Logistic Regression",
+      "input": "Stacked predictions from base learners"
+    }
+  },
+  "training_protocol": {
+    "cross_validation": "5-fold CV in stacking first layer",
+    "repeats": "10 runs with different random seeds",
+    "hyperparameter_tuning": "Optuna framework",
+    "libraries": [
+      "sklearn 1.0.2",
+      "SHAP 0.40.0",
+      "Optuna 2.10.0"
+    ]
+  },
+  "metrics": {
+    "classification": [
+      "Accuracy",
+      "Precision",
+      "Recall",
+      "F1 Score",
+      "AUC-ROC"
+    ]
+  },
+  "results": {
+    "heart_dataset": {
+      "best_single_model": "CatBoost",
+      "best_single_accuracy": 89.49,
+      "stacking_model": {
+        "accuracy": 89.86,
+        "precision": 92.5,
+        "recall": 90.24,
+        "f1_score": 91.36,
+        "auc": 0.95
+      }
+    },
+    "heart_attack_dataset": {
+      "stacking_model": {
+        "accuracy": 84.62,
+        "precision": 86,
+        "recall": 86,
+        "f1_score": 86,
+        "auc": 0.92
+      }
+    }
+  },
+  "key_findings": [
+    "Stacking ensemble outperforms all individual models",
+    "Tree-based models (CatBoost, RF) perform best among single models",
+    "Feature importance: ST_Slope and ChestPainType are most important",
+    "SHAP improves interpretability and feature selection"
+  ],
+  "reproducibility": {
+    "status": "MODERATELY REPRODUCIBLE",
+    "available": [
+      "Dataset construction details",
+      "Feature list",
+      "Preprocessing pipeline",
+      "Model architecture",
+      "Evaluation protocol",
+      "Metrics and results"
+    ],
+    "missing": [
+      "Exact hyperparameter values from Optuna",
+      "Random seed values",
+      "Exact normalization method parameters",
+      "Exact SHAP/GBDT configuration",
+      "Implementation details for each base learner"
+    ]
+  },
+  "recommended_reproduction": {
+    "steps": [
+      "Merge UCI heart datasets and remove duplicates",
+      "Normalize features",
+      "Apply GBDT-based feature importance + SHAP filtering",
+      "Split dataset 80/20",
+      "Train base learners (LR, RF, ET, MLP, CatBoost)",
+      "Use 5-fold CV to generate stacking features",
+      "Train LR meta-learner on stacked outputs",
+      "Repeat experiment with multiple random seeds and average results",
+      "Evaluate using accuracy, precision, recall, F1, and AUC"
+    ]
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "paper": {
+    "title": "Evaluating Machine Learning Methods for Predicting Diabetes among Female Patients in Bangladesh",
+    "authors": [
+      "Badiuzzaman Pranto",
+      "Sk. Maliha Mehnaz",
+      "Esha Bintee Mahid",
+      "Imran Mahmud Sadman",
+      "Ahsanur Rahman",
+      "Sifat Momen"
+    ],
+    "year": 2020,
+    "scope_for_this_json": "PIMA dataset only",
+    "goal": "Replicate the machine learning implementation and reported results on the PIMA dataset"
+  },
+  "dataset": {
+    "name": "PIMA Indians Diabetes Dataset",
+    "source_reported": "Obtained from Kaggle; originally collected from the National Institute of Diabetes, Digestive and Kidney Diseases, India",
+    "instances": 768,
+    "original_feature_count": 8,
+    "class_distribution": {
+      "positive": 268,
+      "negative": 500
+    },
+    "original_features": [
+      {
+        "name": "Pregnancies",
+        "description": "Number of times pregnant",
+        "min": 0,
+        "max": 17,
+        "mean": 3.85
+      },
+      {
+        "name": "Glucose",
+        "description": "2-h oral glucose test (mg/dL)",
+        "min": 0,
+        "max": 199,
+        "mean": 120.89
+      },
+      {
+        "name": "BloodPressure",
+        "description": "Diastolic blood pressure (mm Hg)",
+        "min": 0,
+        "max": 122,
+        "mean": 69.11
+      },
+      {
+        "name": "SkinThickness",
+        "description": "Triceps skin fold thickness (mm)",
+        "min": 0,
+        "max": 99,
+        "mean": 20.54
+      },
+      {
+        "name": "Insulin",
+        "description": "2-H serum insulin (mu U/mL)",
+        "min": 0,
+        "max": 846,
+        "mean": 79.8
+      },
+      {
+        "name": "BMI",
+        "description": "Body mass index (kg/m^2)",
+        "min": 0,
+        "max": 67.1,
+        "mean": 31.99
+      },
+      {
+        "name": "DiabetesPedigreeFunction",
+        "description": "Diabetes in family history",
+        "min": 0.08,
+        "max": 2.42,
+        "mean": 0.47
+      },
+      {
+        "name": "Age",
+        "description": "Age in years",
+        "min": 21,
+        "max": 81,
+        "mean": 33.42
+      }
+    ],
+    "features_used_in_this_study": [
+      "Pregnancies",
+      "Glucose",
+      "BMI",
+      "Age"
+    ],
+    "reason_for_using_only_4_features": "These were the common features available in both the PIMA dataset and the Kurmitola dataset, and the paper aligned the modeling setup across both datasets"
+  },
+  "preprocessing": {
+    "invalid_value_handling": [
+      {
+        "feature": "Glucose",
+        "invalid_value": 0,
+        "treatment": "Replace with mean of the feature"
+      },
+      {
+        "feature": "BMI",
+        "invalid_value": 0,
+        "treatment": "Replace with mean of the feature"
+      }
+    ],
+    "feature_selection": {
+      "method": "Manual selection based on common availability between datasets and correlation analysis",
+      "selected_features": [
+        "Pregnancies",
+        "Glucose",
+        "BMI",
+        "Age"
+      ]
+    },
+    "scaling": {
+      "method": "Min-max normalization",
+      "formula": "X_norm = (X - X_min) / (X_max - X_min)",
+      "target_range": [0, 1]
+    },
+    "split": {
+      "train_ratio": 0.7,
+      "test_ratio": 0.3,
+      "reported_train_size": 538
+    },
+    "cross_validation": {
+      "method": "3-fold cross-validation",
+      "purpose": "Hyperparameter tuning and model refinement",
+      "reported_fold_train_size": 358,
+      "reported_fold_validation_size": 179
+    }
+  },
+  "implementation": {
+    "libraries": {
+      "machine_learning": "scikit-learn",
+      "plotting": [
+        "Matplotlib",
+        "Seaborn"
+      ]
+    },
+    "workflow": [
+      "Load PIMA dataset",
+      "Clean invalid zero values in Glucose and BMI using mean imputation",
+      "Select 4 features: Pregnancies, Glucose, BMI, Age",
+      "Normalize features with min-max scaling",
+      "Split dataset into 70% train and 30% test",
+      "Tune hyperparameters using 3-fold cross-validation where needed",
+      "Train classifiers on the PIMA training set",
+      "Evaluate on the PIMA test set"
+    ]
+  },
+  "algorithms": [
+    {
+      "name": "DecisionTree",
+      "family": "Supervised classification",
+      "implementation_notes": {
+        "algorithm_basis": "CART",
+        "criterion_reported": "Entropy / information gain"
+      },
+      "hyperparameters": {
+        "tuned_parameter": "max_depth",
+        "selection_method": "3-fold cross-validation and GridSearchCV",
+        "best_value_reported": 2
+      },
+      "results_on_pima_test_set": {
+        "accuracy": 0.731,
+        "precision": 0.75,
+        "recall": 0.9,
+        "f1_score": 0.82,
+        "auc": 0.71
+      },
+      "confusion_matrix_counts": {
+        "tp": 141,
+        "fp": 16,
+        "fn": 46,
+        "tn": 28
+      }
+    },
+    {
+      "name": "KNN",
+      "family": "Supervised classification",
+      "implementation_notes": {
+        "distance_metric": "Euclidean distance"
+      },
+      "hyperparameters": {
+        "tuned_parameter": "n_neighbors",
+        "selection_method": "3-fold cross-validation and GridSearchCV",
+        "best_value_reported": 16
+      },
+      "results_on_pima_test_set": {
+        "accuracy": 0.757,
+        "precision": 0.79,
+        "recall": 0.88,
+        "f1_score": 0.83,
+        "auc": 0.8
+      },
+      "confusion_matrix_counts": {
+        "tp": 138,
+        "fp": 19,
+        "fn": 37,
+        "tn": 37
+      }
+    },
+    {
+      "name": "RandomForest",
+      "family": "Ensemble supervised classification",
+      "implementation_notes": {
+        "base_learner": "CART decision trees",
+        "prediction_rule": "Majority voting"
+      },
+      "hyperparameters": {
+        "reported_parameter": "n_estimators",
+        "best_value_reported": 800,
+        "selection_method": "Described as the same approach used for KNN and Decision Tree with GridSearchCV and cross-validation",
+        "reported_unspecified_parameter": "m (number of features used to learn each tree) was described conceptually but not given as a final explicit value in the paper text provided"
+      },
+      "results_on_pima_test_set": {
+        "accuracy": 0.779,
+        "precision": 0.81,
+        "recall": 0.89,
+        "f1_score": 0.84,
+        "auc": 0.83
+      },
+      "confusion_matrix_counts": {
+        "tp": 139,
+        "fp": 18,
+        "fn": 33,
+        "tn": 41
+      }
+    },
+    {
+      "name": "NaiveBayes",
+      "family": "Supervised probabilistic classification",
+      "implementation_notes": {
+        "basis": "Bayes theorem",
+        "assumption": "Conditional independence among predictors"
+      },
+      "hyperparameters": {
+        "requires_tuning": false,
+        "note": "The paper states that Naive Bayes did not require hyperparameter tuning"
+      },
+      "results_on_pima_test_set": {
+        "accuracy": 0.722,
+        "precision": 0.77,
+        "recall": 0.84,
+        "f1_score": 0.8,
+        "auc": 0.8
+      },
+      "confusion_matrix_counts": {
+        "tp": 132,
+        "fp": 25,
+        "fn": 39,
+        "tn": 35
+      }
+    }
+  ],
+  "evaluation": {
+    "test_set": "Held-out PIMA test set",
+    "metrics_reported": [
+      "accuracy",
+      "precision",
+      "recall",
+      "f1_score",
+      "auc"
+    ],
+    "metric_formulas_reported": {
+      "accuracy": "(TP + TN) / (TP + FP + TN + FN)",
+      "recall": "TP / (TP + FN)",
+      "precision": "TP / (TP + FP)",
+      "f1_score": "2 * recall * precision / (recall + precision)"
+    },
+    "best_model_on_pima": {
+      "name": "RandomForest",
+      "accuracy": 0.779,
+      "precision": 0.81,
+      "recall": 0.89,
+      "f1_score": 0.84,
+      "auc": 0.83
+    }
+  },
+  "replication_checklist": {
+    "required_steps": [
+      "Use the PIMA Indians Diabetes dataset",
+      "Keep only the features Pregnancies, Glucose, BMI, and Age",
+      "Replace zero values in Glucose with the mean of Glucose",
+      "Replace zero values in BMI with the mean of BMI",
+      "Apply min-max normalization to selected features",
+      "Split the data 70:30 into train and test sets",
+      "Use 3-fold cross-validation for hyperparameter tuning",
+      "Train Decision Tree with max_depth = 2",
+      "Train KNN with n_neighbors = 16 and Euclidean distance",
+      "Train Random Forest with 800 trees",
+      "Train Naive Bayes without hyperparameter tuning",
+      "Evaluate using accuracy, precision, recall, F1-score, and AUC on the PIMA test set"
+    ],
+    "not_fully_specified_in_paper": [
+      "Random seed / random_state",
+      "Exact train-test split seed",
+      "Exact scikit-learn class names and constructor arguments",
+      "Exact Naive Bayes variant",
+      "Final explicit value of random forest feature subsampling parameter m"
+    ]
+  },
+  "compact_results_table": [
+    {
+      "algorithm": "KNN",
+      "accuracy": 0.757,
+      "precision": 0.79,
+      "recall": 0.88,
+      "f1_score": 0.83,
+      "auc": 0.8
+    },
+    {
+      "algorithm": "DecisionTree",
+      "accuracy": 0.731,
+      "precision": 0.75,
+      "recall": 0.9,
+      "f1_score": 0.82,
+      "auc": 0.71
+    },
+    {
+      "algorithm": "RandomForest",
+      "accuracy": 0.779,
+      "precision": 0.81,
+      "recall": 0.89,
+      "f1_score": 0.84,
+      "auc": 0.83
+    },
+    {
+      "algorithm": "NaiveBayes",
+      "accuracy": 0.722,
+      "precision": 0.77,
+      "recall": 0.84,
+      "f1_score": 0.8,
+      "auc": 0.8
+    }
+  ]
+}

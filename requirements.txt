@@ -1,0 +1,8 @@
+numpy>=2.2
+pandas>=2.3
+scipy>=1.16
+scikit-learn>=1.6,<1.8
+matplotlib>=3.10
+openpyxl
+# Only for implementations/diabetes/ashour_et_al.py (FNN and CNN)
+torch>=2.5

@@ -1,0 +1,185 @@
+{
+  "paper": {
+    "title": "Enhancing Prognosis Accuracy for Ischemic Cardiovascular Disease Using K Nearest Neighbor Algorithm: A Robust Approach",
+    "citation": ":contentReference[oaicite:0]{index=0}"
+  },
+  "high_level_summary": {
+    "objective": "Develop a machine learning-based system to accurately predict ischemic cardiovascular disease using multiple classifiers and identify the best-performing model.",
+    "key_idea": "Compare several ML models and optimize them via hyperparameter tuning, with KNN emerging as the best model.",
+    "best_model": "K-Nearest Neighbors (KNN)",
+    "best_accuracy_percent": 91.8,
+    "best_auc_percent": 90.27
+  },
+  "dataset": {
+    "name": "Merged Heart Disease Dataset (Kaggle-based fusion)",
+    "sources": [
+      "Cleveland (303)",
+      "Hungarian (294)",
+      "Switzerland (123)",
+      "Long Beach VA (200)",
+      "Stalog (270)"
+    ],
+    "total_samples": 918,
+    "features_total": 12,
+    "target": "HeartDisease",
+    "train_test_split": "70/30"
+  },
+  "features": [
+    "Age",
+    "Sex",
+    "ChestPainType",
+    "RestingBP",
+    "Cholesterol",
+    "FastingBS",
+    "RestingECG",
+    "MaxHR",
+    "ExerciseAngina",
+    "Oldpeak",
+    "ST_Slope"
+  ],
+  "preprocessing": {
+    "steps": [
+      "Dataset merging across 5 sources",
+      "Data cleaning (outlier handling in RestingBP, Cholesterol, Oldpeak)",
+      "Missing/invalid value correction (e.g., cholesterol=0 replaced with median)",
+      "Label encoding for categorical features",
+      "Standardization using StandardScaler",
+      "Data visualization for insights",
+      "Train-test split (70/30)"
+    ],
+    "outlier_handling": {
+      "RestingBP_outliers": "Values < 80 removed",
+      "Cholesterol_outliers": "Values <100 or >450 removed",
+      "zero_cholesterol": "Replaced with median"
+    }
+  },
+  "algorithms": {
+    "models_used": [
+      "Logistic Regression (LR)",
+      "Decision Tree (DT)",
+      "Random Forest (RF)",
+      "Support Vector Machine (SVM)",
+      "Gaussian Naive Bayes (GNB)",
+      "K-Nearest Neighbors (KNN)"
+    ],
+    "best_model_details": {
+      "model": "KNN",
+      "k_value": 7,
+      "distance_metric": "Euclidean",
+      "algorithm": "Ball Tree",
+      "weighting": "Distance-based"
+    }
+  },
+  "training_protocol": {
+    "hyperparameter_tuning": [
+      "GridSearchCV",
+      "RandomizedSearchCV"
+    ],
+    "cross_validation": "Multiple folds with extensive combinations (e.g., KNN ~3000 fits)",
+    "environment": {
+      "hardware": "AMD Ryzen 9 7950X",
+      "software": "Python (Anaconda, Jupyter Notebook)",
+      "libraries": [
+        "Scikit-learn",
+        "NumPy",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ]
+    }
+  },
+  "metrics": {
+    "classification": [
+      "Accuracy",
+      "Precision",
+      "Recall",
+      "F1 Score",
+      "Specificity",
+      "AUC-ROC"
+    ]
+  },
+  "results": {
+    "before_tuning": {
+      "best_model": "Decision Tree (~88.3% accuracy)",
+      "knn": {
+        "accuracy": 83.2,
+        "precision": 90.8,
+        "recall": 79.6,
+        "f1_score": 84.9,
+        "auc": 83.9
+      }
+    },
+    "after_tuning": {
+      "knn": {
+        "accuracy": 91.8,
+        "precision": 92.5,
+        "recall": 91.4,
+        "f1_score": 91.9,
+        "specificity": 89.19,
+        "auc": 90.27
+      },
+      "improvements": {
+        "accuracy_increase_percent": 8.6,
+        "recall_increase_percent": 11.8,
+        "f1_increase_percent": 7.0
+      }
+    }
+  },
+  "key_findings": [
+    "KNN significantly outperforms all other models after hyperparameter tuning",
+    "Hyperparameter tuning (especially RandomizedSearchCV) is critical for performance gains",
+    "Larger merged dataset improves generalization compared to traditional small datasets",
+    "Important clinical features (e.g., ST_Slope, ChestPainType) enhance prediction accuracy",
+    "Data preprocessing (especially outlier handling and scaling) strongly impacts results"
+  ],
+  "methodology_pipeline": {
+    "steps": [
+      "Merge datasets",
+      "Clean and preprocess data",
+      "Encode categorical features",
+      "Scale features",
+      "Split dataset",
+      "Train multiple ML models",
+      "Perform hyperparameter tuning",
+      "Evaluate models",
+      "Select best model (KNN)"
+    ]
+  },
+  "reproducibility": {
+    "status": "MODERATELY REPRODUCIBLE",
+    "available": [
+      "Dataset composition and sources",
+      "Feature definitions",
+      "Preprocessing steps",
+      "Model list and architecture",
+      "Evaluation metrics",
+      "Performance results before and after tuning"
+    ],
+    "missing": [
+      "Exact hyperparameter search spaces",
+      "Exact final hyperparameter values",
+      "Random seeds",
+      "Exact implementation scripts",
+      "Detailed cross-validation splits"
+    ]
+  },
+  "limitations": [
+    "Hyperparameter configurations not fully specified",
+    "No external validation dataset beyond merged dataset",
+    "Potential bias from merged datasets",
+    "Limited exploration of deep learning models"
+  ],
+  "recommended_reproduction": {
+    "steps": [
+      "Merge 5 UCI/Kaggle heart datasets",
+      "Clean data and handle outliers",
+      "Encode categorical features using LabelEncoder",
+      "Standardize features using StandardScaler",
+      "Split data (70/30)",
+      "Train LR, DT, RF, SVM, GNB, and KNN models",
+      "Tune hyperparameters using RandomizedSearchCV",
+      "Evaluate using accuracy, precision, recall, F1, specificity, and AUC",
+      "Select KNN with k≈7 as final model"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+[
+ {
+  "test": "DeLong",
+  "p_value": 0.010569246415133722
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.07367775074067512
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.020959489096585144
+ },
+ {
+  "test": "DeLong",
+  "p_value": 9.421567293100289e-08
+ },
+ {
+  "test": "DeLong",
+  "p_value": 0.5864937767539653
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.0002771615982055664
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.11846923828124999
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.020921335337794035
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.49896229860376107
+ },
+ {
+  "test": "McNemar",
+  "p_value": 0.01639507184919225
+ }
+]

@@ -1,0 +1,446 @@
+[
+  {
+    "algorithm": "Naive Bayes",
+    "abbreviation": "NB",
+    "implementation": {
+      "tool": "WEKA 3.8",
+      "algorithm_type": "probability-based classifier",
+      "paper_description": "Produces posterior probability for target classes based on feature extraction and Bayes theorem.",
+      "reported_hyperparameters": null,
+      "notes": "The paper did not report any tuned NB hyperparameters in Table 5."
+    },
+    "dataset": {
+      "name": "Pima Indian Diabetes Dataset (PIDD)",
+      "owner": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+      "n_instances_original": 768,
+      "target": {
+        "name": "Class",
+        "negative": 500,
+        "positive": 268
+      },
+      "features": [
+        "Preg",
+        "Plas",
+        "Pres",
+        "Skin",
+        "Insu",
+        "Mass",
+        "Pedi",
+        "Age"
+      ]
+    },
+    "preprocessing": {
+      "tool": "WEKA 3.8",
+      "reported_steps": [
+        "Initial preprocessing to control the imbalanced dataset",
+        "Explored oversampling of minority class and undersampling of majority class",
+        "Removed instances with missing values"
+      ],
+      "retained_training_data_for_final_experiments": "Preprocessed dataset after removal of missing instances",
+      "excluded_from_final_experiments": [
+        "Oversampling dataset",
+        "Undersampling dataset"
+      ],
+      "dataset_counts_reported": {
+        "original": 768,
+        "preprocess_after_removal_of_missing_instances": 392,
+        "undersampling": 536,
+        "oversampling": 1036
+      }
+    },
+    "evaluation": {
+      "validation": "k-fold cross-validation",
+      "k_values": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "metrics": [
+        "accuracy",
+        "precision",
+        "recall",
+        "f_score",
+        "auc"
+      ]
+    },
+    "results": {
+      "confusion_matrix": {
+        "true_negative": 427,
+        "false_positive": 73,
+        "false_negative": 122,
+        "true_positive": 146
+      },
+      "performance_by_k": [
+        {
+          "k": 5,
+          "accuracy": 0.76,
+          "precision": 0.76,
+          "recall": 0.76,
+          "f_score": 0.76,
+          "auc": 0.81
+        },
+        {
+          "k": 10,
+          "accuracy": 0.76,
+          "precision": 0.75,
+          "recall": 0.76,
+          "f_score": 0.76,
+          "auc": 0.81
+        },
+        {
+          "k": 15,
+          "accuracy": 0.76,
+          "precision": 0.75,
+          "recall": 0.76,
+          "f_score": 0.75,
+          "auc": 0.81
+        },
+        {
+          "k": 20,
+          "accuracy": 0.76,
+          "precision": 0.75,
+          "recall": 0.76,
+          "f_score": 0.75,
+          "auc": 0.81
+        }
+      ],
+      "paper_ranking_summary": "Ranked among the three best models; below LR and around/below RF depending on metric."
+    }
+  },
+  {
+    "algorithm": "J48",
+    "abbreviation": "J48",
+    "implementation": {
+      "tool": "WEKA 3.8",
+      "algorithm_type": "decision tree classifier",
+      "paper_description": "Used to model feature behavior, identify informative root node attributes, and produce a pruned decision tree.",
+      "reported_hyperparameters": {
+        "pruning_confidence_C": 0.25
+      },
+      "notes": "The paper describes information gain and Gini index for attribute selection and shows a pruned tree with plasma glucose as the central node."
+    },
+    "dataset": {
+      "name": "Pima Indian Diabetes Dataset (PIDD)",
+      "owner": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+      "n_instances_original": 768,
+      "target": {
+        "name": "Class",
+        "negative": 500,
+        "positive": 268
+      },
+      "features": [
+        "Preg",
+        "Plas",
+        "Pres",
+        "Skin",
+        "Insu",
+        "Mass",
+        "Pedi",
+        "Age"
+      ]
+    },
+    "preprocessing": {
+      "tool": "WEKA 3.8",
+      "reported_steps": [
+        "Initial preprocessing to control the imbalanced dataset",
+        "Explored oversampling of minority class and undersampling of majority class",
+        "Removed instances with missing values"
+      ],
+      "retained_training_data_for_final_experiments": "Preprocessed dataset after removal of missing instances",
+      "excluded_from_final_experiments": [
+        "Oversampling dataset",
+        "Undersampling dataset"
+      ],
+      "dataset_counts_reported": {
+        "original": 768,
+        "preprocess_after_removal_of_missing_instances": 392,
+        "undersampling": 536,
+        "oversampling": 1036
+      }
+    },
+    "evaluation": {
+      "validation": "k-fold cross-validation",
+      "k_values": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "metrics": [
+        "accuracy",
+        "precision",
+        "recall",
+        "f_score",
+        "auc"
+      ]
+    },
+    "results": {
+      "confusion_matrix": {
+        "true_negative": 427,
+        "false_positive": 73,
+        "false_negative": 122,
+        "true_positive": 146
+      },
+      "performance_by_k": [
+        {
+          "k": 5,
+          "accuracy": 0.71,
+          "precision": 0.71,
+          "recall": 0.71,
+          "f_score": 0.71,
+          "auc": 0.72
+        },
+        {
+          "k": 10,
+          "accuracy": 0.73,
+          "precision": 0.73,
+          "recall": 0.73,
+          "f_score": 0.73,
+          "auc": 0.75
+        },
+        {
+          "k": 15,
+          "accuracy": 0.76,
+          "precision": 0.75,
+          "recall": 0.76,
+          "f_score": 0.76,
+          "auc": 0.74
+        },
+        {
+          "k": 20,
+          "accuracy": 0.75,
+          "precision": 0.74,
+          "recall": 0.75,
+          "f_score": 0.74,
+          "auc": 0.74
+        }
+      ],
+      "paper_ranking_summary": "Lowest-ranked model in the paper."
+    }
+  },
+  {
+    "algorithm": "Random Forest",
+    "abbreviation": "RF",
+    "implementation": {
+      "tool": "WEKA 3.8",
+      "algorithm_type": "tree ensemble classifier",
+      "paper_description": "Random decision trees vote on the target class; the paper explains majority voting across trees.",
+      "reported_hyperparameters": {
+        "number_of_trees": 100,
+        "number_of_features_per_tree": 4,
+        "out_of_bag_error": 0.237
+      },
+      "notes": "The prose gives a 50-tree example for explanation, but the tuned setting reported in Table 5 is 100 trees."
+    },
+    "dataset": {
+      "name": "Pima Indian Diabetes Dataset (PIDD)",
+      "owner": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+      "n_instances_original": 768,
+      "target": {
+        "name": "Class",
+        "negative": 500,
+        "positive": 268
+      },
+      "features": [
+        "Preg",
+        "Plas",
+        "Pres",
+        "Skin",
+        "Insu",
+        "Mass",
+        "Pedi",
+        "Age"
+      ]
+    },
+    "preprocessing": {
+      "tool": "WEKA 3.8",
+      "reported_steps": [
+        "Initial preprocessing to control the imbalanced dataset",
+        "Explored oversampling of minority class and undersampling of majority class",
+        "Removed instances with missing values"
+      ],
+      "retained_training_data_for_final_experiments": "Preprocessed dataset after removal of missing instances",
+      "excluded_from_final_experiments": [
+        "Oversampling dataset",
+        "Undersampling dataset"
+      ],
+      "dataset_counts_reported": {
+        "original": 768,
+        "preprocess_after_removal_of_missing_instances": 392,
+        "undersampling": 536,
+        "oversampling": 1036
+      }
+    },
+    "evaluation": {
+      "validation": "k-fold cross-validation",
+      "k_values": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "metrics": [
+        "accuracy",
+        "precision",
+        "recall",
+        "f_score",
+        "auc"
+      ]
+    },
+    "results": {
+      "confusion_matrix": {
+        "true_negative": 431,
+        "false_positive": 69,
+        "false_negative": 118,
+        "true_positive": 150
+      },
+      "performance_by_k": [
+        {
+          "k": 5,
+          "accuracy": 0.75,
+          "precision": 0.75,
+          "recall": 0.75,
+          "f_score": 0.75,
+          "auc": 0.82
+        },
+        {
+          "k": 10,
+          "accuracy": 0.74,
+          "precision": 0.74,
+          "recall": 0.74,
+          "f_score": 0.74,
+          "auc": 0.81
+        },
+        {
+          "k": 15,
+          "accuracy": 0.76,
+          "precision": 0.76,
+          "recall": 0.76,
+          "f_score": 0.76,
+          "auc": 0.82
+        },
+        {
+          "k": 20,
+          "accuracy": 0.75,
+          "precision": 0.74,
+          "recall": 0.75,
+          "f_score": 0.74,
+          "auc": 0.82
+        }
+      ],
+      "paper_ranking_summary": "One of the three best models; typically ranked behind LR."
+    }
+  },
+  {
+    "algorithm": "Logistic Regression",
+    "abbreviation": "LR",
+    "implementation": {
+      "tool": "WEKA 3.8",
+      "algorithm_type": "binary classifier",
+      "paper_description": "Binary logistic regression to predict tested positive (1) vs tested negative (0).",
+      "reported_hyperparameters": {
+        "R_squared_value_R": 1e-08
+      },
+      "notes": "The paper reports only this tuning value in Table 5 and does not provide additional LR implementation details."
+    },
+    "dataset": {
+      "name": "Pima Indian Diabetes Dataset (PIDD)",
+      "owner": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+      "n_instances_original": 768,
+      "target": {
+        "name": "Class",
+        "negative": 500,
+        "positive": 268
+      },
+      "features": [
+        "Preg",
+        "Plas",
+        "Pres",
+        "Skin",
+        "Insu",
+        "Mass",
+        "Pedi",
+        "Age"
+      ]
+    },
+    "preprocessing": {
+      "tool": "WEKA 3.8",
+      "reported_steps": [
+        "Initial preprocessing to control the imbalanced dataset",
+        "Explored oversampling of minority class and undersampling of majority class",
+        "Removed instances with missing values"
+      ],
+      "retained_training_data_for_final_experiments": "Preprocessed dataset after removal of missing instances",
+      "excluded_from_final_experiments": [
+        "Oversampling dataset",
+        "Undersampling dataset"
+      ],
+      "dataset_counts_reported": {
+        "original": 768,
+        "preprocess_after_removal_of_missing_instances": 392,
+        "undersampling": 536,
+        "oversampling": 1036
+      }
+    },
+    "evaluation": {
+      "validation": "k-fold cross-validation",
+      "k_values": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "metrics": [
+        "accuracy",
+        "precision",
+        "recall",
+        "f_score",
+        "auc"
+      ]
+    },
+    "results": {
+      "confusion_matrix": {
+        "true_negative": 450,
+        "false_positive": 50,
+        "false_negative": 129,
+        "true_positive": 139
+      },
+      "performance_by_k": [
+        {
+          "k": 5,
+          "accuracy": 0.77,
+          "precision": 0.77,
+          "recall": 0.77,
+          "f_score": 0.76,
+          "auc": 0.83
+        },
+        {
+          "k": 10,
+          "accuracy": 0.77,
+          "precision": 0.76,
+          "recall": 0.77,
+          "f_score": 0.76,
+          "auc": 0.83
+        },
+        {
+          "k": 15,
+          "accuracy": 0.77,
+          "precision": 0.77,
+          "recall": 0.77,
+          "f_score": 0.76,
+          "auc": 0.83
+        },
+        {
+          "k": 20,
+          "accuracy": 0.77,
+          "precision": 0.77,
+          "recall": 0.77,
+          "f_score": 0.76,
+          "auc": 0.83
+        }
+      ],
+      "paper_ranking_summary": "Best-performing model overall in the paper."
+    }
+  }
+]

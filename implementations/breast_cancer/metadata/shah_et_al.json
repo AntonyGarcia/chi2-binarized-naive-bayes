@@ -1,0 +1,336 @@
+{
+  "paper": {
+    "title": "Machine learning techniques for identification of carcinogenic mutations, which cause breast adenocarcinoma",
+    "authors": [
+      "Asghar Ali Shah",
+      "Hafiz Abid Mahmood Malik",
+      "Abdul Hafeez Mohammad",
+      "Yaser Daanial Khan",
+      "Abdullah Alourani"
+    ],
+    "journal": "Scientific Reports",
+    "year": 2022,
+    "doi": "10.1038/s41598-022-15533-8",
+    "source_file": "shah_et_al.pdf"
+  },
+  "task": {
+    "problem_type": "Binary classification of gene mutations into carcinogenic driver mutations vs normal/passenger mutations for breast adenocarcinoma identification",
+    "goal": "Use machine learning on engineered genomic-sequence features to identify carcinogenic mutations associated with breast adenocarcinoma"
+  },
+  "dataset": {
+    "samples": 4127,
+    "total_mutations": 6170,
+    "genes": 99,
+    "data_sources": {
+      "normal_sequences": "Ensembl",
+      "mutation_information": "IntOGen"
+    },
+    "construction_method": "The paper states that IntOGen provides mutation information but not mutated sequences, so the authors developed a Python application to inject mutation information into normal gene sequences to construct mutated sequences.",
+    "class_definition": {
+      "positive_class": "Driver mutations / mutated gene sequences causing cancer",
+      "negative_class": "Normal gene sequences; passenger mutations are treated as non-carcinogenic and considered normal sequences"
+    },
+    "not_reported": [
+      "Exact class counts before SMOTE",
+      "Exact class counts after SMOTE",
+      "Exact sequence lengths",
+      "Exact train/test counts for each split",
+      "Per-gene sample split details"
+    ]
+  },
+  "preprocessing": {
+    "pipeline": [
+      "Collect normal sequences from Ensembl",
+      "Collect mutation metadata from IntOGen",
+      "Construct mutated sequences using a custom Python application",
+      "Combine mutated and normal sequences",
+      "Balance the data using SMOTE",
+      "Extract handcrafted features from gene sequences",
+      "Apply machine learning classifiers"
+    ],
+    "imbalance_handling": {
+      "method": "SMOTE",
+      "description": "Minority class oversampling through interpolation between a selected minority sample and its neighbors",
+      "steps_reported": [
+        "Mark minority and majority classes",
+        "Determine oversampling amount",
+        "Randomly choose minority instance K and its neighbors N",
+        "Compute difference between N and K",
+        "Multiply difference by a random value between 0 and 1 and add to K",
+        "Repeat until desired synthetic samples are generated"
+      ],
+      "not_reported": [
+        "k_neighbors used in SMOTE",
+        "Sampling ratio",
+        "Random seed",
+        "Whether SMOTE was applied before or within each fold",
+        "Library or implementation details"
+      ]
+    },
+    "feature_scaling": {
+      "used": true,
+      "details": "Paper explicitly states that feature scaling allows each data sample to participate in detection, but it does not specify the scaler type.",
+      "not_reported": [
+        "Standardization vs min-max normalization",
+        "Scaling range",
+        "Whether fit was done per train fold only"
+      ]
+    },
+    "missing_data_handling": {
+      "mentioned": true,
+      "details": "The paper states that raw moments are used for data imputation.",
+      "not_reported": [
+        "What values were missing",
+        "How much data was missing",
+        "Exact imputation procedure",
+        "Whether imputation was actually needed on the final feature table"
+      ]
+    }
+  },
+  "feature_extraction": {
+    "type": "Handcrafted sequence-derived features",
+    "reported_features": [
+      "Hahn moments / Hahne's polynomial based features",
+      "Raw moments",
+      "Central moments",
+      "PRIM (Position Relative Incidence Matrix)",
+      "RPRIM (Reverse Position Relative Incidence Matrix)",
+      "Frequency matrix",
+      "AAPIV (Accumulative Absolute Position Incidence Vector)",
+      "RAAPIV (Reverse Accumulative Absolute Position Incidence Vector)"
+    ],
+    "notes": [
+      "PRIM is described as a 20 x 20 matrix.",
+      "RPRIM is the reverse-sequence analogue of PRIM.",
+      "AAPIV/RAAPIV encode composition and relative positioning information.",
+      "The paper presents equations for several feature families but does not clearly specify the final concatenated feature dimension used for classification."
+    ],
+    "replication_gaps": [
+      "No explicit final feature vector length",
+      "No exact encoding scheme for nucleotide/gene symbols into matrices/vectors",
+      "No full algorithmic pseudocode for feature extraction",
+      "No software package or code repository"
+    ]
+  },
+  "algorithms": {
+    "models_evaluated": [
+      "Decision Tree",
+      "Gaussian Naive Bayes",
+      "Random Forest"
+    ],
+    "best_model": "Decision Tree",
+    "algorithm_notes": {
+      "DecisionTree": {
+        "description": "Supervised tree-based classifier using entropy and information gain",
+        "criterion_reported": "Entropy / information gain"
+      },
+      "GaussianNaiveBayes": {
+        "description": "Probabilistic classifier based on Bayes theorem with Gaussian assumptions"
+      },
+      "RandomForest": {
+        "description": "Ensemble of decision trees; results merged/averaged for prediction"
+      }
+    },
+    "not_reported": {
+      "DecisionTree": [
+        "max_depth",
+        "min_samples_split",
+        "min_samples_leaf",
+        "class_weight",
+        "splitter",
+        "pruning settings"
+      ],
+      "GaussianNaiveBayes": [
+        "var_smoothing"
+      ],
+      "RandomForest": [
+        "n_estimators",
+        "max_depth",
+        "max_features",
+        "bootstrap",
+        "min_samples_split",
+        "min_samples_leaf",
+        "criterion"
+      ],
+      "general": [
+        "Software/library versions",
+        "Random seed",
+        "Hyperparameter search procedure"
+      ]
+    }
+  },
+  "evaluation_protocol": {
+    "methods": [
+      "Self-consistency test",
+      "Independent set testing",
+      "10-fold cross-validation"
+    ],
+    "independent_set_testing": {
+      "train_pct": 80,
+      "test_pct": 20
+    },
+    "tenfold_cv": {
+      "folds": 10,
+      "description": "Data is equally partitioned into 10 groups; each group is used once for validation and the results are averaged"
+    },
+    "metrics_reported": [
+      "accuracy",
+      "sensitivity",
+      "specificity",
+      "MCC"
+    ],
+    "auc_roc": {
+      "reported": true,
+      "note": "ROC curves and fold-level ROC areas are shown, but a single tabulated AUC value per classifier/evaluation setup is generally not reported except as values visible in ROC plots."
+    },
+    "not_reported": [
+      "Precision",
+      "Recall as a separate tabulated metric",
+      "F1 score",
+      "Confusion matrices",
+      "Confidence intervals",
+      "Statistical significance tests"
+    ]
+  },
+  "results": {
+    "self_consistency_test": {
+      "DecisionTree": {
+        "accuracy_pct": 99,
+        "sensitivity_pct": 99,
+        "specificity_pct": 100,
+        "mcc": 0.50,
+        "auc_or_roc_note": "ROC described as between 0.99 and 1.0; visually near-perfect"
+      },
+      "GaussianNaiveBayes": {
+        "accuracy_pct": 81,
+        "sensitivity_pct": 79,
+        "specificity_pct": 84,
+        "mcc": 0.31,
+        "auc_or_roc_note": "ROC described around 0.8 to 0.85"
+      },
+      "RandomForest": {
+        "accuracy_pct": 97,
+        "sensitivity_pct": 99,
+        "specificity_pct": 92,
+        "mcc": 0.68,
+        "auc_or_roc_note": "ROC visually near-perfect"
+      }
+    },
+    "independent_set_testing": {
+      "DecisionTree": {
+        "accuracy_pct": 99,
+        "sensitivity_pct": 99,
+        "specificity_pct": 99,
+        "mcc": 0.70,
+        "auc_or_roc_note": "ROC point described around 0.99"
+      },
+      "GaussianNaiveBayes": {
+        "accuracy_pct": 81,
+        "sensitivity_pct": 79,
+        "specificity_pct": 84,
+        "mcc": 0.70,
+        "auc_or_roc_note": "ROC described around 0.8 to 0.85"
+      },
+      "RandomForest": {
+        "accuracy_pct": 95,
+        "sensitivity_pct": 99,
+        "specificity_pct": 92,
+        "mcc": 0.67,
+        "auc_or_roc_note": "ROC accuracy described as 0.95"
+      }
+    },
+    "tenfold_cross_validation": {
+      "DecisionTree": {
+        "accuracy_pct": 99,
+        "sensitivity_pct": 98,
+        "specificity_pct": 99,
+        "mcc": 0.98,
+        "mean_auc_from_roc_plot": 0.99
+      },
+      "GaussianNaiveBayes": {
+        "accuracy_pct": 85,
+        "sensitivity_pct": 76,
+        "specificity_pct": 81,
+        "mcc": 0.62,
+        "mean_auc_from_roc_plot": 0.89
+      },
+      "RandomForest": {
+        "accuracy_pct": 92,
+        "sensitivity_pct": 85,
+        "specificity_pct": 99,
+        "mcc": 0.85,
+        "mean_auc_from_roc_plot": 0.99
+      }
+    },
+    "ranking": {
+      "self_consistency_test_best": "Decision Tree",
+      "independent_set_testing_best": "Decision Tree",
+      "tenfold_cross_validation_best": "Decision Tree",
+      "overall_best": "Decision Tree"
+    }
+  },
+  "auc_precision_recall_f1_summary": {
+    "auc": {
+      "self_consistency_test": {
+        "DecisionTree": "approximately 0.99 to 1.00 from ROC discussion/plot",
+        "GaussianNaiveBayes": "approximately 0.80 to 0.85 from ROC discussion/plot",
+        "RandomForest": "approximately near-perfect from ROC plot"
+      },
+      "independent_set_testing": {
+        "DecisionTree": "approximately 0.99 from ROC discussion/plot",
+        "GaussianNaiveBayes": "approximately 0.80 to 0.85 from ROC discussion/plot",
+        "RandomForest": "approximately 0.95 from ROC discussion/plot"
+      },
+      "tenfold_cross_validation": {
+        "DecisionTree": 0.99,
+        "GaussianNaiveBayes": 0.89,
+        "RandomForest": 0.99
+      }
+    },
+    "precision": "Not reported",
+    "recall": "Not explicitly reported as recall; sensitivity is reported and can be treated as recall in binary classification",
+    "f1_score": "Not reported"
+  },
+  "replication_takeaways": {
+    "minimum_reproducible_pipeline_from_paper": [
+      "Collect normal breast-adenocarcinoma-related gene sequences from Ensembl.",
+      "Collect driver/passenger mutation information from IntOGen for 99 genes.",
+      "Construct mutated sequences by injecting mutation metadata into normal sequences using custom code.",
+      "Label driver mutations as positive/carcinogenic and normal plus passenger mutations as negative/non-carcinogenic.",
+      "Balance the dataset using SMOTE.",
+      "Extract handcrafted sequence features including Hahn moments, raw/central moments, PRIM, RPRIM, frequency matrix, AAPIV, and RAAPIV.",
+      "Apply feature scaling.",
+      "Train Decision Tree, Gaussian Naive Bayes, and Random Forest classifiers.",
+      "Evaluate with self-consistency test, 80/20 independent test split, and 10-fold cross-validation.",
+      "Report accuracy, sensitivity, specificity, MCC, and ROC/AUC."
+    ],
+    "expected_best_model": "Decision Tree",
+    "expected_best_metrics": {
+      "independent_test_accuracy_pct": 99,
+      "tenfold_cv_accuracy_pct": 99,
+      "tenfold_cv_sensitivity_pct": 98,
+      "tenfold_cv_specificity_pct": 99,
+      "tenfold_cv_mcc": 0.98,
+      "tenfold_cv_auc": 0.99
+    }
+  },
+  "replication_gaps_and_warnings": {
+    "major_missing_details": [
+      "No exact feature vector construction pipeline",
+      "No exact dimensionality of the final features",
+      "No classifier hyperparameters",
+      "No exact SMOTE settings",
+      "No random seed",
+      "No train/test sample counts after balancing",
+      "No code repository",
+      "No confusion matrices",
+      "No precision or F1 values"
+    ],
+    "important_caveats": [
+      "Some reported MCC values appear unusual relative to the very high accuracies, especially in self-consistency and independent testing.",
+      "ROC/AUC values are mostly inferred from text and plots rather than presented as a clean result table.",
+      "The paper is more reproducible at the high-level workflow stage than at the exact implementation stage."
+    ],
+    "replication_risk": "High for exact reproduction, moderate for approximate reproduction of the overall workflow"
+  }
+}

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Articles of the comparison studies are not redistributed (copyright)
+*.pdf
+
+# Excel copies written when the report file is open
+method_evaluation/outputs/loo_diabetes_tp_breakdown_*.xlsx

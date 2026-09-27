@@ -1,0 +1,405 @@
+{
+  "paper": {
+    "title": "Prediction of Diabetes in Females of Pima Indian Heritage: A Complete Supervised Learning Approach",
+    "year": 2021,
+    "task": "binary_classification",
+    "objective": "Predict whether a female of Pima Indian heritage has diabetes",
+    "platform": {
+      "name": "Orange",
+      "version": "3.24.1",
+      "backend_note": "Uses Python open-source libraries"
+    },
+    "hardware_reported": {
+      "os_architecture": "64-bit",
+      "ram_gb": 4,
+      "cpu": "Intel(R) 3.40 GHz processor"
+    }
+  },
+  "dataset": {
+    "name": "Pima Indians Diabetes Dataset",
+    "sources": [
+      "Kaggle",
+      "UCI data repository",
+      "NIDDK"
+    ],
+    "instances": 768,
+    "columns_total": 9,
+    "population": {
+      "sex": "female",
+      "heritage": "Pima Indians",
+      "minimum_age_years": 21
+    },
+    "target": {
+      "name": "Outcome",
+      "type": "categorical",
+      "encoding": {
+        "0": "non-diabetic",
+        "1": "diabetic"
+      }
+    },
+    "features": [
+      {
+        "name": "Pregnancies",
+        "type": "numeric",
+        "range_reported": [0, 17],
+        "average_reported": 4
+      },
+      {
+        "name": "Glucose",
+        "type": "numeric",
+        "description": "Plasma glucose concentration level (2 hours)",
+        "range_reported": [0, 199],
+        "average_reported": 121
+      },
+      {
+        "name": "BloodPressure",
+        "type": "numeric",
+        "description": "Diastolic blood pressure in mm Hg",
+        "range_reported": [0, 122],
+        "average_reported": 69
+      },
+      {
+        "name": "SkinThickness",
+        "type": "numeric",
+        "description": "Triceps skin thickness in mm",
+        "range_reported": [0, 99],
+        "average_reported": 21
+      },
+      {
+        "name": "Insulin",
+        "type": "numeric",
+        "range_reported": [0, 846],
+        "average_reported": 80
+      },
+      {
+        "name": "BMI",
+        "type": "numeric",
+        "description": "Body mass index in kg/m^2",
+        "range_reported": [0, 67.1],
+        "average_reported": 32
+      },
+      {
+        "name": "DiabetesPedigreeFunction",
+        "type": "numeric",
+        "range_reported": [0.078, 2.42],
+        "average_reported": 0.47
+      },
+      {
+        "name": "Age",
+        "type": "numeric",
+        "range_reported": [21, 81],
+        "average_reported": 33
+      }
+    ]
+  },
+  "preprocessing_and_data_handling": {
+    "input_file_format": "CSV",
+    "missing_values": {
+      "status": "not_reported_as_present",
+      "paper_statement": "Algorithm 1 states dataset is used without missing values",
+      "imputation_method": null
+    },
+    "feature_type_handling": {
+      "numeric_features": [
+        "Pregnancies",
+        "Glucose",
+        "BloodPressure",
+        "SkinThickness",
+        "Insulin",
+        "BMI",
+        "DiabetesPedigreeFunction",
+        "Age"
+      ],
+      "categorical_target": "Outcome"
+    },
+    "normalization_or_standardization": {
+      "applied": "not_reported",
+      "method": null
+    },
+    "feature_selection": {
+      "applied_for_training": "not_reported",
+      "method": null
+    },
+    "dimensionality_reduction": {
+      "used_for_model_training": false,
+      "used_for_visualization_only": [
+        "Principal component analysis / linear projection"
+      ]
+    },
+    "class_balancing": {
+      "applied": "not_reported",
+      "method": null
+    },
+    "outlier_handling": {
+      "applied": "not_reported",
+      "method": null
+    },
+    "data_leakage_controls": {
+      "explicitly_reported": false,
+      "note": "Only k-fold cross-validation procedure is described"
+    },
+    "random_seed": null
+  },
+  "evaluation_protocol": {
+    "validation_strategy": "k-fold cross-validation",
+    "k": 10,
+    "paper_wording": "preferably, k = 10 / k = 10 used in results",
+    "fold_description": "Dataset is folded k times; k-1 fold is used for testing and the rest for training",
+    "note_on_wording": "This train/test description appears reversed from standard k-fold terminology, but reproduced here as written in the paper",
+    "primary_selection_metric": "CA",
+    "reported_metrics": [
+      "AUC",
+      "CA",
+      "F1",
+      "Precision",
+      "Recall"
+    ],
+    "additional_outputs_reported": [
+      "Confusion matrix",
+      "ROC curve",
+      "Lift curve"
+    ]
+  },
+  "algorithms": [
+    {
+      "name": "Classification Tree",
+      "abbreviation": "CT",
+      "family": "decision_tree",
+      "paper_summary": "Binary recursive partitioning tree with nodes, edges and leaf nodes",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "criterion",
+        "max_depth",
+        "min_samples_split",
+        "min_samples_leaf",
+        "pruning",
+        "class_weight",
+        "random_state"
+      ],
+      "results": {
+        "AUC": 0.648,
+        "CA": 0.708,
+        "F1": 0.703,
+        "Precision": 0.701,
+        "Recall": 0.7082
+      }
+    },
+    {
+      "name": "Support Vector Machine",
+      "abbreviation": "SVM",
+      "family": "support_vector_classifier",
+      "paper_summary": "Constructs a hyperplane or set of hyperplanes to classify data",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "kernel",
+        "C",
+        "gamma",
+        "degree",
+        "class_weight",
+        "probability",
+        "random_state"
+      ],
+      "results": {
+        "AUC": 0.707,
+        "CA": 0.665,
+        "F1": 0.671,
+        "Precision": 0.681,
+        "Recall": 0.665
+      }
+    },
+    {
+      "name": "k-Nearest Neighbour",
+      "abbreviation": "k-NN",
+      "family": "instance_based",
+      "paper_summary": "Classifies by nearest neighbors using similarity/distance; paper mentions Euclidean, Manhattan, Minkowski and Hamming distances in general description",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "n_neighbors",
+        "distance_metric",
+        "weights",
+        "p",
+        "algorithm"
+      ],
+      "results": {
+        "AUC": 0.737,
+        "CA": 0.711,
+        "F1": 0.706,
+        "Precision": 0.703,
+        "Recall": 0.711
+      }
+    },
+    {
+      "name": "Naive Bayes",
+      "abbreviation": "NB",
+      "family": "probabilistic",
+      "paper_summary": "Bayes theorem with feature independence assumptions",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "variant",
+        "smoothing"
+      ],
+      "results": {
+        "AUC": 0.818,
+        "CA": 0.736,
+        "F1": 0.739,
+        "Precision": 0.745,
+        "Recall": 0.736
+      }
+    },
+    {
+      "name": "Random Forest",
+      "abbreviation": "RF",
+      "family": "ensemble_bagging",
+      "paper_summary": "Average of multiple deep decision trees trained using bagging / bootstrap aggregation",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "n_estimators",
+        "criterion",
+        "max_depth",
+        "max_features",
+        "min_samples_split",
+        "min_samples_leaf",
+        "bootstrap",
+        "random_state"
+      ],
+      "results": {
+        "AUC": 0.808,
+        "CA": 0.754,
+        "F1": 0.752,
+        "Precision": 0.751,
+        "Recall": 0.754
+      }
+    },
+    {
+      "name": "Neural Network",
+      "abbreviation": "NN",
+      "family": "feed_forward_ann",
+      "paper_summary": "Feed-forward neural network / ANN with layered neurons and nonlinear transformations",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "hidden_layer_sizes",
+        "activation",
+        "optimizer",
+        "learning_rate",
+        "epochs",
+        "batch_size",
+        "regularization",
+        "random_state"
+      ],
+      "results": {
+        "AUC": 0.824,
+        "CA": 0.758,
+        "F1": 0.755,
+        "Precision": 0.754,
+        "Recall": 0.758
+      }
+    },
+    {
+      "name": "AdaBoost",
+      "abbreviation": "AB",
+      "family": "boosting",
+      "paper_summary": "Binary classification boosting method; paper says it is mainly used with short decision trees and refers to AdaBoost.M1",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "base_estimator",
+        "n_estimators",
+        "learning_rate",
+        "algorithm",
+        "random_state"
+      ],
+      "results": {
+        "AUC": 0.681,
+        "CA": 0.710,
+        "F1": 0.710,
+        "Precision": 0.710,
+        "Recall": 0.710
+      }
+    },
+    {
+      "name": "Logistic Regression",
+      "abbreviation": "LR",
+      "family": "linear_probabilistic_classifier",
+      "paper_summary": "Predicts event probability using a logistic function",
+      "hyperparameters_reported": {},
+      "hyperparameters_needed_for_replication_but_missing": [
+        "penalty",
+        "C",
+        "solver",
+        "max_iter",
+        "class_weight",
+        "random_state"
+      ],
+      "results": {
+        "AUC": 0.825,
+        "CA": 0.768,
+        "F1": 0.760,
+        "Precision": 0.763,
+        "Recall": 0.768
+      }
+    }
+  ],
+  "best_model": {
+    "name": "Logistic Regression",
+    "abbreviation": "LR",
+    "selection_basis": "highest classification accuracy (CA)",
+    "results": {
+      "AUC": 0.825,
+      "CA": 0.768,
+      "F1": 0.760,
+      "Precision": 0.763,
+      "Recall": 0.768
+    },
+    "paper_conclusion": "LR performs better than the other reported models on this dataset"
+  },
+  "implementation_blueprint": {
+    "minimum_reproducible_steps_from_paper": [
+      "Load Pima Indians diabetes CSV dataset",
+      "Treat Outcome as categorical target with 0=non-diabetic and 1=diabetic",
+      "Use the 8 numeric predictors: Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age",
+      "Run 10-fold cross-validation",
+      "Train the following models individually: CT, SVM, k-NN, NB, RF, NN, AB, LR",
+      "Compute AUC, CA, F1, Precision, Recall",
+      "Compare models by CA",
+      "Optionally generate confusion matrix, ROC curve and lift curve"
+    ],
+    "closest_replication_strategy": {
+      "language": "Python",
+      "tooling_options": [
+        "Orange 3.24.1 for closest platform replication",
+        "scikit-learn for code-based reproduction"
+      ],
+      "recommended_caution": [
+        "Use default Orange learner settings if the goal is closest possible replication, because the paper does not publish tuned hyperparameters",
+        "Document all defaults used by your software version",
+        "Fix a random seed even though the paper does not report one",
+        "Expect small metric drift because exact hyperparameters and split randomness are not reported"
+      ]
+    }
+  },
+  "reported_visual_analysis": {
+    "exploratory_visualizations": [
+      "Data table view",
+      "Linear projection",
+      "Principal component analysis visualization",
+      "Scatter plots with Glucose on x-axis versus other attributes"
+    ],
+    "evaluation_visualizations": [
+      "Confusion matrices",
+      "ROC curves",
+      "Lift curves"
+    ]
+  },
+  "limitations_for_replication": {
+    "missing_details": [
+      "Exact hyperparameters for all models",
+      "Exact Orange widget settings",
+      "Random seed",
+      "Whether scaling was applied before SVM, k-NN, LR, and NN",
+      "Whether any zero values were treated as missing and imputed",
+      "Class distribution details",
+      "Any calibration or threshold-tuning details",
+      "Exact confusion matrices for all models in machine-readable form"
+    ],
+    "effect_on_reproduction": "You can reproduce the study design closely, but not guarantee bit-for-bit identical metrics from the paper"
+  }
+}

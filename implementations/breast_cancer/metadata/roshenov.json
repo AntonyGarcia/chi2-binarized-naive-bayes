@@ -1,0 +1,194 @@
+{
+  "paper": {
+    "title": "Performance Comparison of Different Machine Learning Techniques for Early Prediction of Breast Cancer using Wisconsin Breast Cancer Dataset",
+    "authors": [
+      "Atajan Rovshenov",
+      "Serhat Peker"
+    ],
+    "venue": "2022 3rd International Informatics and Software Engineering Conference (IISEC)",
+    "year": 2022,
+    "source_file": "rovshenov.pdf",
+    "citation": ":contentReference[oaicite:0]{index=0}"
+  },
+  "task": {
+    "problem_type": "Binary classification of breast cancer cases into benign vs malignant",
+    "goal": "Compare ANN, SVM, and Random Forest for early breast cancer prediction on the Wisconsin Breast Cancer dataset",
+    "citations": [
+      ":contentReference[oaicite:1]{index=1}"
+    ]
+  },
+  "dataset": {
+    "name": "Wisconsin Breast Cancer Dataset",
+    "source": "UCI Machine Learning Repository",
+    "reported_instances_page_3": 699,
+    "reported_examples_page_4": 569,
+    "reported_attributes": 11,
+    "feature_table_count": 9,
+    "reported_feature_titles": [
+      "Radius",
+      "Texture",
+      "Perimeter",
+      "Area",
+      "Smoothness",
+      "Concavity",
+      "Concave Points",
+      "Symmetry",
+      "Fractal Dimension"
+    ],
+    "replication_note": "The paper is internally inconsistent. Page 3 says the dataset has 699 instances and 11 attributes, while page 4 says 'Out of the 569 examples, we used 398 for the training set and 171 for testing.' The feature table on page 3 lists only 9 named features.",
+    "citations": [
+      ":contentReference[oaicite:2]{index=2}"
+    ]
+  },
+  "preprocessing": {
+    "reported_steps": [
+      "data preprocessing",
+      "data standardization",
+      "categorical data conversion into numerical data"
+    ],
+    "scaling_method": "sklearn.preprocessing.StandardScaler",
+    "implementation_note": "The paper states StandardScaler with fit_transform() was used to compress large and very small values into a certain range.",
+    "reported_data_issues_addressed": [
+      "missing values",
+      "duplicated data",
+      "noisy values"
+    ],
+    "missing_or_unclear_details": [
+      "Exact missing-value handling",
+      "Whether duplicates were actually present and removed",
+      "Which columns were categorical and how they were encoded",
+      "Whether the train/test split was stratified",
+      "Whether scaling was fit on training only or the full dataset",
+      "Random seed"
+    ],
+    "citations": [
+      ":contentReference[oaicite:3]{index=3}"
+    ]
+  },
+  "algorithms": {
+    "models_compared": [
+      "Artificial Neural Network (ANN)",
+      "Support Vector Machine (SVM)",
+      "Random Forest"
+    ],
+    "citations": [
+      ":contentReference[oaicite:4]{index=4}"
+    ]
+  },
+  "hyperparameters": {
+    "SVM": {
+      "kernel": "rbf",
+      "degree": 3
+    },
+    "ANN": {
+      "hidden_layer_activation": "ReLU",
+      "last_layer_activation": "sigmoid",
+      "loss_function": "Sparse Categorical Cross Entropy",
+      "optimizer": "RMSprop",
+      "batch_size": 1,
+      "epochs": 10,
+      "other_parameters_note": "The paper says 'and these other parameters' but does not specify them."
+    },
+    "RandomForest": {
+      "n_estimators": 100,
+      "criterion": "gini"
+    },
+    "missing_or_not_reported": [
+      "ANN architecture depth and width",
+      "Number of neurons per layer",
+      "Learning rate",
+      "Regularization/dropout",
+      "SVM C",
+      "SVM gamma",
+      "Random Forest max_depth",
+      "Random Forest min_samples_split",
+      "Random Forest min_samples_leaf",
+      "Class weights",
+      "Random seed"
+    ],
+    "citations": [
+      ":contentReference[oaicite:5]{index=5}"
+    ]
+  },
+  "evaluation_protocol": {
+    "cross_validation": {
+      "used": true,
+      "method": "10-fold cross-validation",
+      "description": "Dataset separated into 10 chunks; 9 folds used for training and 1 fold used for analysis/testing"
+    },
+    "reported_split_counts": {
+      "train": 398,
+      "test": 171,
+      "total_reported_here": 569
+    },
+    "metrics_reported": [
+      "accuracy",
+      "AUC",
+      "precision",
+      "recall",
+      "F-score"
+    ],
+    "metric_definition_note": "The formulas table appears inconsistent: it defines precision as TP/(TP+TN), which is not the standard precision formula. This is likely a paper error.",
+    "citations": [
+      ":contentReference[oaicite:6]{index=6}"
+    ]
+  },
+  "results": {
+    "SVM": {
+      "accuracy": 0.97,
+      "auc": 0.97,
+      "precision": 0.97,
+      "recall": 0.98,
+      "f_score": 0.98
+    },
+    "ANN": {
+      "accuracy": 0.99,
+      "auc": 0.99,
+      "precision": 0.99,
+      "recall": 0.98,
+      "f_score": 0.99
+    },
+    "RandomForest": {
+      "accuracy": 0.97,
+      "auc": 0.96,
+      "precision": 0.98,
+      "recall": 0.99,
+      "f_score": 0.97
+    },
+    "best_model": "ANN",
+    "best_accuracy": 0.99,
+    "paper_conclusion": "ANN achieved the highest prediction performance among the three algorithms.",
+    "citations": [
+      ":contentReference[oaicite:7]{index=7}"
+    ]
+  },
+  "replication_takeaways": {
+    "minimum_reproducible_setup_from_paper": [
+      "Use the Wisconsin Breast Cancer dataset from UCI.",
+      "Standardize features with sklearn.preprocessing.StandardScaler using fit_transform().",
+      "Train and compare ANN, SVM, and Random Forest.",
+      "Use SVM with kernel='rbf' and degree=3.",
+      "Use ANN with ReLU in dense layers, sigmoid in the last layer, Sparse Categorical Cross Entropy loss, RMSprop optimizer, batch size 1, and 10 epochs.",
+      "Use Random Forest with n_estimators=100 and criterion='gini'.",
+      "Evaluate using 10-fold cross-validation and report accuracy, AUC, precision, recall, and F-score."
+    ],
+    "expected_best_model": "ANN",
+    "expected_best_metrics": {
+      "accuracy": 0.99,
+      "auc": 0.99,
+      "precision": 0.99,
+      "recall": 0.98,
+      "f_score": 0.99
+    },
+    "replication_gaps": [
+      "Dataset size is inconsistently reported as both 699 and 569.",
+      "Exact feature set is unclear.",
+      "Train/test split description conflicts with the 10-fold CV description.",
+      "ANN architecture is not reported.",
+      "Critical SVM and Random Forest hyperparameters are missing.",
+      "No confusion matrix is reported.",
+      "No seed or implementation code is provided."
+    ],
+    "replication_risk": "High, due to multiple inconsistencies and missing implementation details."
+  }
+}

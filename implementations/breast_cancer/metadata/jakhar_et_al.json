@@ -1,0 +1,214 @@
+{
+  "dataset": {
+    "name": "WBCD",
+    "description": "Wisconsin Breast Cancer Database",
+    "instances": 569,
+    "attributes": 32,
+    "classes": 2,
+    "class_distribution": {
+      "malignant": 212,
+      "benign": 357,
+      "malignant_pct": 37,
+      "benign_pct": 63
+    },
+    "source_note": "Features are calculated from a digitized image of a fine needle aspirate (FNA) of a breast mass."
+  },
+  "algorithms": {
+    "candidate_models": [
+      "Random Forest",
+      "Support Vector Machine",
+      "K-Nearest Neighbor",
+      "Extra Tree",
+      "AdaBoost",
+      "Stochastic Gradient Descent",
+      "Gradient Boosting",
+      "Multilayer Perceptron",
+      "CART"
+    ],
+    "selected_top_5_base_learners_for_SELF": [
+      "Extra Tree",
+      "Random Forest",
+      "AdaBoost",
+      "Gradient Boosting",
+      "KNN9"
+    ],
+    "meta_learner": "Logistic Regression",
+    "ensemble_strategy": "Stacking",
+    "stacking_protocol": {
+      "level_0": "Base learners trained on training data",
+      "level_1": "Logistic regression trained on base-learner predictions",
+      "cross_validation": "10-fold cross-validation on training data for level-0 learners"
+    }
+  },
+  "preprocessing": {
+    "reported_for_WBCD": "No detailed WBCD-specific preprocessing pipeline is fully specified in the paper.",
+    "missing_or_not_reported": [
+      "Feature scaling/normalization details",
+      "Missing-value handling",
+      "Categorical encoding",
+      "Feature selection details",
+      "Random seed",
+      "Stratification details"
+    ]
+  },
+  "hyperparameters": {
+    "RandomForest": {
+      "tested_n_estimators": [50, 100, 500, 1000, 1500, 2000],
+      "best_reported_for_WBCD": {
+        "n_estimators": 500,
+        "max_depth": 4,
+        "criterion": "entropy",
+        "highest_accuracy_pct": 97.0
+      }
+    },
+    "ExtraTree": {
+      "tested_n_estimators": [50, 100, 500, 1000, 1500, 2000],
+      "best_reported_for_WBCD": {
+        "n_estimators": 500,
+        "highest_accuracy_pct": 96.73
+      }
+    },
+    "KNN": {
+      "distance": "Euclidean distance",
+      "selected_model_used_in_SELF": "KNN9",
+      "k": 9
+    },
+    "missing_or_not_reported": [
+      "Exact logistic regression settings",
+      "AdaBoost hyperparameters",
+      "Gradient Boosting hyperparameters",
+      "SVM hyperparameters",
+      "MLP hyperparameters",
+      "SGD hyperparameters",
+      "CART hyperparameters",
+      "Extra Tree max_depth/min_samples settings",
+      "Train/test split seed"
+    ]
+  },
+  "evaluation_protocol": {
+    "split_strategy": "80/20 train-test split",
+    "stacking_training_cv": "10-fold cross-validation for stacking base learners",
+    "metrics_reported": [
+      "accuracy",
+      "AUC",
+      "precision",
+      "recall",
+      "sensitivity",
+      "F1-score",
+      "MCC"
+    ],
+    "metric_note": "Recall is treated as sensitivity in the paper."
+  },
+  "results": {
+    "SELF": {
+      "accuracy_pct": 98.80,
+      "auc_pct": 99.06,
+      "precision_pct": 99.09,
+      "recall_pct": 99.09,
+      "sensitivity_pct": 99.09,
+      "f1_score_pct": 99.09,
+      "mcc_pct": 97.45
+    },
+    "base_learners": {
+      "AdaBoost": {
+        "accuracy_pct": 97.24,
+        "auc_pct": 99.06,
+        "precision_pct": 98.08,
+        "recall_pct": 94.67,
+        "sensitivity_pct": 94.67,
+        "f1_score_pct": 96.23,
+        "mcc_pct": 94.23
+      },
+      "GradientBoosting": {
+        "accuracy_pct": 97.00,
+        "auc_pct": 99.49,
+        "precision_pct": 98.16,
+        "recall_pct": 94.00,
+        "sensitivity_pct": 94.00,
+        "f1_score_pct": 95.82,
+        "mcc_pct": 93.77
+      },
+      "RandomForest": {
+        "accuracy_pct": 97.00,
+        "auc_pct": 98.89,
+        "precision_pct": 100.00,
+        "recall_pct": 93.33,
+        "sensitivity_pct": 93.33,
+        "f1_score_pct": 96.55,
+        "mcc_pct": 94.66
+      },
+      "ExtraTree": {
+        "accuracy_pct": 96.73,
+        "auc_pct": 99.44,
+        "precision_pct": 93.75,
+        "recall_pct": 96.00,
+        "sensitivity_pct": 96.00,
+        "f1_score_pct": 96.77,
+        "mcc_pct": 94.79
+      },
+      "KNN9": {
+        "accuracy_pct": 95.96,
+        "auc_pct": 97.87,
+        "precision_pct": 95.86,
+        "recall_pct": 86.67,
+        "sensitivity_pct": 86.67,
+        "f1_score_pct": 92.86,
+        "mcc_pct": 89.58
+      },
+      "MLP": {
+        "accuracy_pct": 95.49,
+        "auc_pct": 96.72,
+        "precision_pct": 93.33,
+        "recall_pct": 97.67,
+        "sensitivity_pct": 97.67,
+        "f1_score_pct": 95.45,
+        "mcc_pct": 92.66
+      },
+      "CART": {
+        "accuracy_pct": 95.49,
+        "auc_pct": 96.27,
+        "precision_pct": 95.35,
+        "recall_pct": 95.35,
+        "sensitivity_pct": 95.35,
+        "f1_score_pct": 95.35,
+        "mcc_pct": 92.53
+      },
+      "SGD": {
+        "accuracy_pct": 95.25,
+        "auc_pct": 95.10,
+        "precision_pct": 95.24,
+        "recall_pct": 93.02,
+        "sensitivity_pct": 93.02,
+        "f1_score_pct": 94.12,
+        "mcc_pct": 90.64
+      },
+      "SVM": {
+        "accuracy_pct": 91.94,
+        "auc_pct": 96.27,
+        "precision_pct": 90.12,
+        "recall_pct": 88.83,
+        "sensitivity_pct": 88.83,
+        "f1_score_pct": 89.32,
+        "mcc_pct": 83.05
+      }
+    }
+  },
+  "replication_takeaways": {
+    "expected_best_model": "SELF stacked ensemble",
+    "minimum_reproducible_setup_from_paper": [
+      "Use the WBCD dataset with 569 instances and binary labels.",
+      "Apply an 80/20 train-test split.",
+      "Train 9 candidate classifiers.",
+      "Select Extra Tree, Random Forest, AdaBoost, Gradient Boosting, and KNN9 as base learners.",
+      "Use logistic regression as the meta-learner.",
+      "Use 10-fold cross-validation for generating level-0 predictions.",
+      "Compare using accuracy, AUC, precision, recall, F1-score, and MCC."
+    ],
+    "replication_gaps": [
+      "No exact WBCD preprocessing steps are given.",
+      "No random seed is reported.",
+      "No confusion matrix is reported.",
+      "Most model hyperparameters are omitted."
+    ]
+  }
+}
