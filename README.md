@@ -3,7 +3,8 @@
 Code and data for the paper:
 
 > Garcia, A.; Noriega de la Colina, A.; Britton, G.; Huang, X. *Interpretable and Calibrated
-> Classification of Clinical Data Using Supervised Feature Binarization.* Bioengineering (MDPI), 2026.
+> Classification of Clinical Data Using Supervised Feature Binarization.* arXiv:2607.15394, 2026.
+> [https://arxiv.org/abs/2607.15394](https://arxiv.org/abs/2607.15394)
 
 The method binarizes each continuous clinical feature at a single threshold selected with the χ²
 test of independence and models the result with Bernoulli Naïve Bayes (BNB). Thresholds are
@@ -125,11 +126,15 @@ Please cite the original sources when using the datasets.
 If you use this code, please cite the paper:
 
 ```bibtex
-@article{garcia2026interpretable,
-  title   = {Interpretable and Calibrated Classification of Clinical Data Using Supervised Feature Binarization},
-  author  = {Garcia, Antony and Noriega de la Colina, Adri{\'a}n and Britton, Gabrielle and Huang, Xinming},
-  journal = {Bioengineering},
-  year    = {2026},
-  note    = {Volume, article number and DOI to be added after publication}
+@misc{garcia2026interpretable,
+  title         = {Interpretable and Calibrated Classification of Clinical Data Using Supervised Feature Binarization},
+  author        = {Garcia, Antony and Noriega de la Colina, Adri{\'a}n and Britton, Gabrielle and Huang, Xinming},
+  year          = {2026},
+  eprint        = {2607.15394},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2607.15394}
 }
 ```
+
+The journal version is under review; this reference will be updated once it is published.
